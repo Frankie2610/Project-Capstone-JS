@@ -861,7 +861,6 @@ footer .footer__link h6 {
   line-height: 20px;
   text-transform: uppercase;
   margin-bottom: 10px;
-  /* border-bottom: 1px solid rgba(23, 54, 88, 0.4); */
   padding-bottom: 10px;
   font-weight: bold;
 }
@@ -877,7 +876,6 @@ footer .footer__link .href2 a {
 footer .href1,
 footer .href2 {
   display: flex;
-  /* justify-content: center; */
 }
 footer .footer__link li span {
   font-size: 15px;
@@ -968,9 +966,6 @@ footer ul.social li img {
   border-radius: 100%;
   text-align: center;
   margin-right: 5px;
-}
-footer ul.social .tiktok img {
-  animation: phonering infinite 2s;
 }
 footer .w3l-footer-22 ul.social {
   margin-top: 20px;
