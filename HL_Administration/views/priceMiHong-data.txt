@@ -1,0 +1,209 @@
+[
+  {
+    "buyingPrice": "buyingPrice NaN",
+    "sellingPrice": "sellingPrice NaN",
+    "code": "SJC",
+    "sellChange": "sellChange NaN",
+    "sellChangePercent": "sellChangePercent NaN",
+    "buyChange": "buyChange NaN",
+    "buyChangePercent": "buyChangePercent NaN",
+    "dateTime": "dateTime NaN",
+    "id": "1"
+  },
+  {
+    "buyingPrice": "buyingPrice NaN",
+    "sellingPrice": "sellingPrice NaN",
+    "code": "999",
+    "sellChange": "sellChange NaN",
+    "sellChangePercent": "sellChangePercent NaN",
+    "buyChange": "buyChange NaN",
+    "buyChangePercent": "buyChangePercent NaN",
+    "dateTime": "dateTime NaN",
+    "id": "2"
+  },
+  {
+    "buyingPrice": "buyingPrice NaN",
+    "sellingPrice": "sellingPrice NaN",
+    "code": "985",
+    "sellChange": "sellChange NaN",
+    "sellChangePercent": "sellChangePercent NaN",
+    "buyChange": "buyChange NaN",
+    "buyChangePercent": "buyChangePercent NaN",
+    "dateTime": "dateTime NaN",
+    "id": "3"
+  },
+  {
+    "buyingPrice": "buyingPrice NaN",
+    "sellingPrice": "sellingPrice NaN",
+    "code": "980",
+    "sellChange": "sellChange NaN",
+    "sellChangePercent": "sellChangePercent NaN",
+    "buyChange": "buyChange NaN",
+    "buyChangePercent": "buyChangePercent NaN",
+    "dateTime": "dateTime NaN",
+    "id": "4"
+  },
+  {
+    "buyingPrice": "buyingPrice NaN",
+    "sellingPrice": "sellingPrice NaN",
+    "code": "950",
+    "sellChange": "sellChange NaN",
+    "sellChangePercent": "sellChangePercent NaN",
+    "buyChange": "buyChange NaN",
+    "buyChangePercent": "buyChangePercent NaN",
+    "dateTime": "dateTime NaN",
+    "id": "5"
+  },
+  {
+    "buyingPrice": "buyingPrice NaN",
+    "sellingPrice": "sellingPrice NaN",
+    "code": "750",
+    "sellChange": "sellChange NaN",
+    "sellChangePercent": "sellChangePercent NaN",
+    "buyChange": "buyChange NaN",
+    "buyChangePercent": "buyChangePercent NaN",
+    "dateTime": "dateTime NaN",
+    "id": "6"
+  },
+  {
+    "buyingPrice": "buyingPrice NaN",
+    "sellingPrice": "sellingPrice NaN",
+    "code": "680",
+    "sellChange": "sellChange NaN",
+    "sellChangePercent": "sellChangePercent NaN",
+    "buyChange": "buyChange NaN",
+    "buyChangePercent": "buyChangePercent NaN",
+    "dateTime": "dateTime NaN",
+    "id": "7"
+  },
+  {
+    "buyingPrice": "buyingPrice NaN",
+    "sellingPrice": "sellingPrice NaN",
+    "code": "610",
+    "sellChange": "sellChange NaN",
+    "sellChangePercent": "sellChangePercent NaN",
+    "buyChange": "buyChange NaN",
+    "buyChangePercent": "buyChangePercent NaN",
+    "dateTime": "dateTime NaN",
+    "id": "8"
+  }
+]
+
+
+
+
+//////////////
+[
+  {
+    "name": "Bông tai hình hoa",
+    "price": 4880000,
+    "goldPurity": "24k",
+    "weight": "3.3",
+    "size": "size 15",
+    "type": "type 15",
+    "quantity": "quantity 15",
+    "codeProduct": "111",
+    "priceDateTime": "28/03/2023, 15:28",
+    "id": "15",
+    "img": "https://scontent.fsgn5-13.fna.fbcdn.net/v/t39.30808-6/338357479_1822714468121759_6788529987011169985_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=730e14&_nc_ohc=BpGUQ7dWiPkAX-0T7KZ&_nc_ht=scontent.fsgn5-13.fna&oh=00_AfBbMn9AVKU8PVo9GRXy-Y5pnZBLibd5TUN1PswA3XyB1Q&oe=6425E3E8",
+    "description": "Mua vàng sung túc cả năm"
+  },
+  {
+    "name": "Bông tai chữ H",
+    "price": 6200000,
+    "goldPurity": "24k",
+    "weight": "4.2",
+    "size": "size 16",
+    "type": "type 16",
+    "quantity": "quantity 16",
+    "codeProduct": "456",
+    "priceDateTime": "28/03/2023, 15:28",
+    "id": "16",
+    "img": "https://scontent.fsgn5-12.fna.fbcdn.net/v/t39.30808-6/337895383_232576892671512_5001140513640383682_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=730e14&_nc_ohc=qM3Ovt44zF8AX_pRFlN&_nc_ht=scontent.fsgn5-12.fna&oh=00_AfD7Yjpr0lCTzcee246RYCIRGsYas1XNysqy5qdr7zrsQQ&oe=64263D5D",
+    "description": "Bông Tai May Mắn"
+  },
+  {
+    "name": "Bông tai",
+    "price": 5320000,
+    "goldPurity": "24k",
+    "weight": "3.6",
+    "size": "size 17",
+    "type": "type 17",
+    "quantity": "quantity 17",
+    "codeProduct": "789",
+    "priceDateTime": "28/03/2023, 15:28",
+    "id": "17",
+    "img": "https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/338003452_902121231044563_2546562770043151593_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=730e14&_nc_ohc=59IuNifUf0IAX_MRpcf&_nc_ht=scontent.fsgn5-5.fna&oh=00_AfDjxeOPDocDInW17bKCEQgZGyPj0ocN-RkL_f_fokXbxw&oe=6425E71F",
+    "description": "Mua vàng sung túc cả năm"
+  },
+  {
+    "name": "Bông tai LV",
+    "price": 4140000,
+    "goldPurity": "24k",
+    "weight": "2.8",
+    "size": "size 18",
+    "type": "type 18",
+    "quantity": "quantity 18",
+    "codeProduct": "888",
+    "priceDateTime": "28/03/2023, 15:28",
+    "id": "18",
+    "img": "https://scontent.fsgn5-12.fna.fbcdn.net/v/t39.30808-6/338029518_680349187424563_3689725454203542800_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=730e14&_nc_ohc=BCU7PS_PsLQAX_REghi&_nc_ht=scontent.fsgn5-12.fna&oh=00_AfBVdBezkucfup8W-grCz8jYfrbjf4CUAqRrdpzH3_fIKA&oe=6425BAF3",
+    "description": "Mua vàng sung túc cả năm"
+  },
+  {
+    "name": "Dây chuyền nữ",
+    "price": 8270000,
+    "goldPurity": "24k",
+    "weight": "5.6",
+    "size": "size 19",
+    "type": "type 19",
+    "quantity": "quantity 19",
+    "codeProduct": "468",
+    "priceDateTime": "28/03/2023, 15:28",
+    "id": "19",
+    "img": "https://scontent.fsgn5-8.fna.fbcdn.net/v/t39.30808-6/338018004_1411933876288329_1723935766722263297_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=730e14&_nc_ohc=WfiqhpFI-QEAX_AjVIG&_nc_ht=scontent.fsgn5-8.fna&oh=00_AfAXyt3NdaCqvsNYU8Uy4P72hIx9ZOM949JBuMxAdoZ3OQ&oe=642733B2",
+    "description": "Mua vàng sung túc cả năm"
+  },
+  {
+    "name": "Bông Tai hột xoàn",
+    "price": 4730000,
+    "goldPurity": "24k",
+    "weight": "3.2",
+    "size": "size 20",
+    "type": "type 20",
+    "quantity": "quantity 20",
+    "codeProduct": "135",
+    "priceDateTime": "28/03/2023, 15:28",
+    "id": "20",
+    "img": "https://scontent.fsgn5-15.fna.fbcdn.net/v/t39.30808-6/338261355_167601692828952_4360932406327113474_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=qD-hTaQv17oAX-UdJll&_nc_ht=scontent.fsgn5-15.fna&oh=00_AfCUM8B2jWEWsrArn7f8al2wpo8F2eJK7QNnNaniCXT7Sw&oe=642725F0",
+    "description": "Mua vàng sung túc cả năm"
+  },
+  {
+    "name": "Bông Tai hột xoàn",
+    "price": 6350000,
+    "goldPurity": "24k",
+    "weight": "4.3",
+    "size": "size 21",
+    "type": "type 21",
+    "quantity": "quantity 21",
+    "codeProduct": "666",
+    "priceDateTime": "28/03/2023, 15:28",
+    "id": "21",
+    "img": "https://scontent.fsgn5-6.fna.fbcdn.net/v/t39.30808-6/338111961_3172503603046800_3397562515710392841_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=730e14&_nc_ohc=GLj2kGbLbbwAX8Jp1n3&_nc_ht=scontent.fsgn5-6.fna&oh=00_AfC3gYV4h-3II9Zn_bjs74dTrprEE6oL6x9wUQLTKJ8xgg&oe=64262BDD",
+    "description": "Mua vàng sung túc cả năm"
+  },
+  {
+    "name": "Bông tai",
+    "price": 5610000,
+    "goldPurity": "24k",
+    "weight": "3.8",
+    "size": "size 22",
+    "type": "type 22",
+    "quantity": "quantity 22",
+    "codeProduct": "888",
+    "priceDateTime": "28/03/2023, 15:28",
+    "id": "22",
+    "img": "https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/338013435_204843855496239_1762835082713760880_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=730e14&_nc_ohc=SJdUG3tWOG4AX9ohRwa&_nc_ht=scontent.fsgn5-9.fna&oh=00_AfCdrxhubLxpRHQ_r01kE72VYMplqVK53fBnrmiSxU9Vnw&oe=642649DB",
+    "description": "Mua vàng sung túc cả năm"
+  }
+]

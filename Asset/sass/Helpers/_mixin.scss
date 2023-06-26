@@ -1,0 +1,69 @@
+// mixins, dùng để tạo các hàm tái sử dụng nhận vào các tham số và định nghĩa các thuộc tính css
+
+// Định nghĩa hàm bằng từ khoá mixin
+@mixin textStyle($color, $fs, $fw) {
+    color: $color;
+    font-size: $fs;
+    font-weight: $fw;
+  }
+  
+  @mixin buttonStyle($bg, $boder, $boder-radius, $px, $py) {
+    background-color: $bg;
+    border: $boder;
+    border-radius: $boder-radius;
+    padding: $py $px;
+  }
+  
+  @mixin buttonStyleHover($bg, $color) {
+    background-color: $bg;
+    color: $color;
+  }
+  
+  @mixin responsive ($screen) {
+    //map-has-key là hàm dùng để kiểm tra một key có tồn tại trong map hay không
+    @if (map-has-key($map: $breakpoints, $key: $screen)) {
+      //map-get là hàm để lấy giá trị trong map bằng key
+      $width: map-get(
+        $map: $breakpoints,
+        $key: $screen,
+      );
+      @media screen and (min-width: $width) {
+        @content;
+  
+      }
+    }
+  }
+
+  @mixin button($width-height,$line-height,$color, $boder,$radius,$bg-color){
+    width: $width-height;
+    height: $width-height;
+    line-height: $line-height;
+    color: $color;
+    border: $boder;
+    border-radius: $radius;
+    background-color: $bg-color;
+}
+@mixin plusMinus($width,$height){
+    width: $width;
+    $height-box:$height;
+    $boder:1px solid transparent;
+    button{
+        @include button($height-box,$height-box,$color-black,$boder,5px,$color-grey);
+        font-size: 13px;
+    }
+    input{
+        @include button($height-box,0,$color-black,$boder,0px,white);
+        width: 20%;
+        &::-webkit-inner-spin-button,
+        ::-webkit-outer-spin-button {
+          appearance: none;
+        }
+    }
+}
+@mixin responsive($screen){
+    @if (map-has-key($map: $breakpoint, $key: $screen )){
+        @media screen and  (min-width: map-get($map: $breakpoint, $key: $screen )){
+            @content;
+        }
+    }
+}

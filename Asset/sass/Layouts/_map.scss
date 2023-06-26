@@ -1,0 +1,118 @@
+  /* CONTACT US */
+
+  .contact__us h3 {
+      font-size: 35px;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 600;
+      line-height: 45px;
+  }
+
+  /* .contact__form {
+    position: relative;
+    top: 0;
+    left: 0;
+  } */
+
+  .contact__form p {
+      font-size: 25px;
+      font-weight: 600;
+      margin: 0px;
+      color: #f55f8d;
+  }
+
+  .contact__form form {
+      display: flex;
+      /* Sắp xếp các thẻ con theo chiều dọc, mặc định thì   flex-direction: row */
+      flex-direction: column;
+      justify-content: space-between;
+      /* Tăng chiều cao thẻ con cho bằng thẻ cha để có khoảng cách mới sử dụng được justify-content */
+      height: 95%;
+      padding: 0 15px;
+  }
+
+  .contact__form input {
+      /* rem phụ thuộc font-size (thẻ html, root) */
+      /* em phụ thuộc font-size gần nhất  */
+      font-size: 15px;
+      /* 1em = 15px, lấy font-size gần nhất  */
+      padding: 10px;
+  }
+
+  .contact__map iframe {
+      width: 100%;
+  }
+
+  .contact__form input,
+  .contact__form textarea {
+      border: 2px solid black;
+      transition: all 0.5s;
+      margin: 10px;
+  }
+
+  .contact__form .submit {
+      width: 50%;
+      height: 40px;
+      text-align: center;
+      transform: translateX(50%);
+      border-radius: 4px;
+  }
+
+  #gia_vang_the_gioi {
+      width: 100%;
+      height: 450px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      border: none;
+      border-right: 1px solid #d9dadb;
+  }
+
+  @media (min-width: 991.2px) {
+      .contact__content {
+          margin: auto;
+          display: flex;
+          padding-top: 20px;
+          justify-content: center;
+      }
+
+      .contact__map {
+          width: 60%;
+      }
+
+      .contact__form {
+          width: 40%;
+      }
+  }
+
+  @media (max-width: 430px) {
+
+      .contact__form p {
+          margin: 10px 0 0 0 !important;
+          font-size: 20px !important;
+          font-weight: 550;
+          margin: 0 0 0 15px;
+      }
+
+      form {
+          font-size: 12px;
+
+          input {
+              margin: 5px 10px !important;
+              padding: 5px !important;
+          }
+
+          textarea {
+              margin-top: 5px !important
+          }
+
+          button {
+              font-size: 13px !important;
+              padding: 0 !important;
+          }
+
+          ::placeholder {
+              font-size: 12px !important;
+          }
+      }
+
+
+  }

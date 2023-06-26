@@ -1,0 +1,53 @@
+.modal-dialog {
+    min-width: 960px;
+
+    .modal-content {
+        background-color: $color-yellow-3;
+
+        .modal-header {
+            border-bottom: none;
+
+            p {
+                @include textStyle(red, 0.9rem, 400);
+            }
+        }
+
+        .modal-body {
+            background-color: $color-white-1;
+            margin: 1rem;
+            border: none;
+
+            .table {
+                thead {
+                    background-color: $color-dark-2;
+
+                    th {
+                        color: $color-yellow-2;
+                    }
+                }
+
+                tbody {
+                    tr {
+                        background-color: $color-blue;
+
+                        td {
+                            color: white;
+                        }
+
+                        .increase, .decrease {
+                            background-color: $color-yellow-2;
+                        }
+                    }
+                }
+            }
+        }
+
+        .modal-footer {
+            border-top: none;
+
+            button {
+                color: white;
+            }
+        }
+    }
+}

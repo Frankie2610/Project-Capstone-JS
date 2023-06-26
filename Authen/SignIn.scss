@@ -1,0 +1,64 @@
+$color-1: #0354a5;
+$defaultSize: 60px;
+$borRad: 10px;
+
+.Sigin_box {
+    margin-top: 200px !important;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.Sigin_icon {
+    width: 60px;
+    height: 60px;
+    background-color: #0354a5;
+    border-radius: 50%;
+    font-size: 30px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.inputCustom {
+    height: 60px;
+    background: white;
+    color: black !important;
+    font-size: 17px !important;
+    border-radius: 10px !important;
+    box-shadow: none;
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+}
+
+.Sigin_inputCustom:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border: 1px solid #0354a5 !important;
+}
+
+.Sigin_btnSignin {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 20px !important;
+    height: 60px;
+    color: white !important;
+    background-color: #0354a5 !important;
+    border-radius: 10px !important;
+}
+
+.AuthLayout_background {
+    background-image: url("https://www.linkpicture.com/q/auth-background_1.jpg");
+    min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    top: 0px;
+    z-index: 1;
+}
+
+/*# sourceMappingURL=SignIn.css.map */
+@media screen and (max-width: 430px) {
+    .Sigin_box {
+        margin-top: 180px !important;
+    }
+}

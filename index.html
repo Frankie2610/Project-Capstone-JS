@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tiệm Vàng Hưng Ký</title>
+  <link rel="shortcut icon" href="./Asset/img/logo1.png" type="image/x-icon">
+
+  <!-- GOOGLE FONT -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap"
+    rel="stylesheet" />
+  <!-- BS4 CSS     -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
+
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- SLICK CSS  -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css"
+    integrity="sha512-6lLUdeQ5uheMFbWm3CP271l14RsX1xtx+J5x2yeIDkkiBpeVTNhTqijME7GgRKKi6hCqovwCoBTlRBEC20M8Mg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+    integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"
+    integrity="sha512-wR4oNhLBHf7smjy0K4oqzdWumd+r5/+6QO/vDda76MW5iug4PT7v86FoEkySIJft3XA0Ae6axhIvHrqwm793Nw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- FANCY BOX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
+
+  <!-- OWL.CAROUSEL  -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+    integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"
+    integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="./Asset/css/main.css" />
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header>
+    <nav class="goldNav navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand active mr-2" href="#">
+          <i class="fa-sharp fa-solid fa-gem"></i>
+          Hưng Lợi</a>
+        <button id="navBarButton" class="navbar-toggler" type="button" data-toggle="" data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"
+          onclick="openModalNavBar()">
+          <span class="fa fa-bars"></span>
+          <span class="fa-solid fa-x d-none"></span>
+        </button>
+        <div class="collapse navbar-collapse mt-2" id="goldNavbar" aria-labelledby="navbarDropdown">
+          <ul class="ml-3 navbar-nav">
+            <li id="navHome" class="nav-item active mr-2" onclick="openModalNavBar()">
+              <a class="nav-link flex-column text-center" href="#">
+                <i class="fa-solid fa-house"></i>
+                <p>Home</p>
+              </a>
+            </li>
+            <li class="nav-item active" onclick="openModalNavBar()">
+              <a class="nav-link flex-column text-center" href="#productPrice" target="">
+                <i class="fa-sharp fa-solid fa-dollar-sign fa-beat"></i>
+                <p>Giá Vàng</p>
+              </a>
+            </li>
+            <li class="nav-item" onclick="openModalNavBar()">
+              <a class="nav-link flex-column text-center" href="./Authen/SignIn.html" target="">
+                <i class="fa-solid fa-users-gear"></i>
+                <p>Đăng nhập</p>
+              </a>
+            </li>
+            <li class="searchKeyWord nav-item text-center">
+              <form id="keyword" class="d-flex my-2 keyword justify-content-center text-center">
+                <input id="txtSearch" class="form-control" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
+                <a class="btn1 mt-2" href="#productInformation" onclick="searchProduct()">
+                  <i id="searchIcon" class="fa fa-search"></i>
+                </a>
+              </form>
+            </li>
+          </ul>
+
+        </div>
+        <div class="nav-item active cart ml-auto d-none d-lg-block">
+          <a class="nav-link flex-column text-center cart-header" href="#" data-toggle="modal" data-target="#cartModal"
+            onclick="openModal()">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="totalQuantity">0</span>
+            <p>Giỏ hàng</p>
+          </a>
+        </div>
+      </div>
+
+    </nav>
+  </header>
+  
+  <!-- CAROUSEL  -->
+  <section class="carousel bg-danger">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-6 d-flex align-items-center">
+          <div class="carousel-content">
+            <h1>Vàng thần tài 2023</h1>
+            <h3>Model mới nhất của năm</h3>
+            <p>
+              Trong không khí rôm rả của những ngày cận Tết Quý Mão, cửa hàng
+              xin giới thiệu những mẫu mã vàng độc đáo, thời thượng của năm
+              2023
+            </p>
+
+            <div class="carousel-button">
+              <button class="btn-gold-white mr-2">
+                <i class="fa fa-info-circle"></i> More Info
+              </button>
+              <button class="btn-gold-blue">
+                <i class="fa fa-shopping-cart"></i> Shop
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <div class="carousel__product d-flex owl-carousel">
+            <div class="carousel__item ">
+              <img class="img-fluid" src="https://www.linkpicture.com/q/nhanmeo1.png" alt="product" srcset="" />
+            </div>
+
+            <div class="carousel__item">
+              <img class="img-fluid" src="https://www.linkpicture.com/q/nhanmeo2_1.png" alt="product" srcset="" />
+            </div>
+
+            <div class="carousel__item">
+              <img class="img-fluid" src="https://www.linkpicture.com/q/nhanmeo3.png" alt="product" srcset="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT  -->
+  <div id="productPrice" class="product container py-5">
+    <div id="priceTable" class="product__content form-group">
+      <div class="priceTable table mb-5">
+        <p class="title__price text-center">GIÁ VÀNG MỚI NHẤT</p>
+        <p>Cập nhật lúc: <span id="dateTime" style="color: red;"></span> Đơn vị tính: VNĐ/Chỉ. Giá vàng thế giới: <span
+            style="color: red;"><span id="globalGoldBuyingPrice"></span><span id="globalGoldSellingPrice"></span></span>
+        </p>
+        <table class="table mt-4">
+          <thead class="text-center">
+            <tr class="bg-warning">
+              <th>LOẠI VÀNG</th>
+              <th>MUA</th>
+              <th>BÁN</th>
+              <th>(+/-)</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr>
+              <td>NỮ TRANG 999</td>
+              <td id="priceBuying24k"></td>
+              <td id="priceSelling24k"></td>
+              <td id="sellChangePercent24k"></td>
+            </tr>
+
+            <tr>
+              <td>NỮ TRANG 750</td>
+              <td id="priceBuying18k"></td>
+              <td id="priceSelling18k"></td>
+              <td id="sellChangePercent18k"></td>
+            </tr>
+
+            <tr>
+              <td>NỮ TRANG 680</td>
+              <td id="priceBuying16k"></td>
+              <td id="priceSelling16k"></td>
+              <td id="sellChangePercent16k"></td>
+            </tr>
+
+            <tr>
+              <td>NỮ TRANG 610</td>
+              <td id="priceBuying14k"></td>
+              <td id="priceSelling14k"></td>
+              <td id="sellChangePercent14k"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <select class="form-select mb-4 testAli bg-warning dropdownSelect" name="" id="productType"
+        aria-label="Default select example" onchange="chooseProducts()">
+        <option selected value="0">Chọn sản phẩm</option>
+        <option value="1">Vàng 24k</option>
+        <option value="2">Vàng 18k</option>
+        <option value="3">Vàng 16k</option>
+        <option value="4">Vàng 14k</option>
+      </select>
+      <div id="productInformation" class="text-center"></div>
+    </div>
+  </div>
+  </div>
+
+  <section id="contact-us" class="w3l-about-2 mode">
+    <div class="container pb-md-5 pb-4 mb-5">
+      <div class="about-2-secs-left contact__us contact__content">
+        <div class="contact__map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d271.8098648857448!2d106.6845683472254!3d10.772945659323625!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f78a9584111%3A0xb060ee5fe7203d22!2zRE5UTiBLaW5oIERvYW5oIFbDoG5nIEjGsG5nIEzhu6Np!5e0!3m2!1svi!2s!4v1679854862651!5m2!1svi!2s"
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade" width="700" height="480" style="border: 1px;" allowfullscreen=""
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade" width="600" height="550" style="border:1px;"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <div class="contact__form text-center">
+          <p class="text-center">Gửi phản hồi cho Hưng Lợi</p>
+          <form action="" method="get">
+            <input type="text" placeholder="Tên của bạn" id="nameCustomer">
+            <input type="email" name="" id="emailCustomer" placeholder="Email của bạn">
+            <input type="phoneNumber" name="" id="phoneNumber" placeholder="Số điện thoại của bạn">
+            <textarea name="Add Question" id="feedbackCustomer" cols="30" rows="7" placeholder="   Nội dung"></textarea>
+            <button id="sendFeedback" class="submit btn btn-primary">Gửi phản hồi</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer__contact" class="w3l-footer-22 position-relative">
+    <div class="footer-sub">
+      <div class="container">
+        <div class="text-txt">
+          <div class="row sub-columns footer__link">
+            <div class="col-lg-3 col-sm-6 sub-one-left mt-lg-0 mt-sm-5 mt-4 footer__logo">
+              <img src="./Asset/img/logo1.png" alt="" srcset="" />
+              <p>DNTN Kinh Doanh Vàng Trang Sức Hưng Lợi</p>
+              <p>Giấy đăng ký doanh nghiệp: <span> 12345678</span></p>
+            </div>
+
+            <div class="col-lg-3 col-sm-6 sub-one-left mt-lg-0 mt-sm-5 mt-4">
+              <h6>Thông tin liên hệ</h6>
+              <div class="column2">
+                <div class="href1">
+                  <span class="fa-regular fa-envelope" aria-hidden="true"></span><a
+                    href="mailto: tiemvanghungloi@gmail.com">tiemvanghungloi@gmail.com</a>
+                </div>
+                <div class="href2" style="cursor: pointer; color: #ff6e65">
+                  <span class="fa fa-phone" aria-hidden="true"></span><a href="tel:+84 90 8169498">+84 90 8169498</a>
+                </div>
+                <div>
+                  <a href="#contact-us" class="contact-para footer__map">
+                    <span class="fa fa-map-marker" aria-hidden="true"></span>Sạp 5C, Chợ Vườn Chuối
+                  </a>
+                </div>
+                <div>
+                  <p class="contact-para">
+                    <span class="fa-solid fa-clock"></span>9:00 - 18:00 (Từ
+                    Thứ 2 - CN)
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 sub-one-left ab-right-cont pl-lg-5 mt-lg-0 mt-sm-5 mt-4 footer-contact-right">
+              <h6>KẾT NỐI VỚI CHÚNG TÔI</h6>
+              <p>
+                DNTN Hưng Lợi chuyên kinh doanh các mặt hàng trang sức tao nhã, sang trọng.
+                <span></span>
+              </p>
+              <p>Chuyên mua bán gia công các loại nữ trang 18K - 24K - Vàng Trắng. </p>
+              <p> Nhận làm hàng mới, thâu lại những món hàng cũ giá cao.</p>
+              <p class="footer__guaranteedGold">Đảm bảo Vàng tốt đúng tuổi 18K - 24K</p>
+              <div class="columns-2">
+                <ul class="social d-flex">
+                  <li class="d-inline">
+                    <a href="#" target="_blank">
+                      <img src="./Asset/img/Social media/facebook.png" alt="Facebook" loading="lazy"
+                        class="sc-7cf57dd1-1 fqYcPj img-fluid" />
+                    </a>
+                  </li>
+                  <li class="d-inline tiktok">
+                    <a href="https://www.tiktok.com/@tiemvanghungloi?is_from_webapp=1&sender_device=pc" target="_blank">
+                      <img src="./Asset/img/Social media/tiktok.png" alt="tiktok" loading="lazy"
+                        class="sc-7cf57dd1-1 fqYcPj img-fluid item2" />
+                    </a>
+                  </li>
+
+                  <li class="d-inline">
+                    <a href="#" target="_blank">
+                      <img src="./Asset/img/Social media/instagram.png" alt="Instagram" loading="lazy"
+                        class="sc-7cf57dd1-1 fqYcPj img-fluid" />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <h6>Phuơng thức thanh toán</h6>
+              <div class="item">
+                <img class="img-lazyload icon-visa" data-src="" alt="" style="opacity: 1"
+                  src="./Asset/img/Payment method/Visa.jpg" />
+              </div>
+              <div class="item">
+                <img class="img-lazyload icon-visa" data-src="" alt="" style="opacity: 1"
+                  src="./Asset/img/Payment method/atm.jpg" />
+              </div>
+              <div class="item2">
+                <img class="img-lazyload icon-visa" data-src="" alt="" style="opacity: 1"
+                  src="./Asset/img/Payment method/momo.png" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="copyright-footer text-center">
+      <div class="columns">
+        <p>
+          @2023 Bản quyền website thuộc DNTN Vàng Hưng Lợi. All rights
+          reserved
+          <a href="https://w3layouts.com/" target="blank"></a>
+          <!-- W3Layouts -->
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="m-menu-fix d-none">
+    <div class="m-menu-fix__inner">
+      <div class="item m-menu-fix__home active"> <a href="/"> <span class="img"> <span class="img-inner"> <img
+                class="img-lazyload" src="./Asset/img/Menu-bar-footer/home-state.jpg" alt="Trang chủ"> </span> </span>
+          <span class="text"> Trang chủ </span> </a> </div>
+      <div class="item m-menu-fix__km "> <a href="#productPrice"> <span class="img"> <span class="img-inner"> <img
+                class="img-lazyload" src="./Asset/img/Menu-bar-footer/tabsale-default.jpg" alt="Khuyến mãi"> </span>
+          </span> <span class="text"> Giá Vàng </span> </a> </div>
+
+      <div class="item m-menu-fix__person ">
+        <a class="flex-column text-center" href="#" data-toggle="modal" data-target="#modalId" onclick="openModal()">
+          <span class="img-inner">
+            <div class="cart-menu">
+              <img src="./Asset/img/Menu-bar-footer/cart.png" style="font-size: 18px" class="mg-lazyload">
+              <span id="cart-number" class="totalQuantity totalQuantity2">0</span>
+            </div>
+
+          </span>
+          <p class="text">Giỏ hàng</p>
+        </a>
+      </div>
+
+      <a id="menu-fix-support" class="item m-menu-fix__support" data-toggle="collapse" data-target="#list-support"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" onclick="support()">
+        <span class="img"> <span class="img-inner" id="wrap-support">
+            <img class="img-lazyload" src="./Asset/img/Menu-bar-footer/Tuvan-icon-1.jpg" alt="Tư vấn">
+          </span> </span>
+        <span class="text"> Tư vấn </span> </a>
+
+    </div>
+  </div>
+  <!-- SUPPORT CONTACT  -->
+
+  <div id="list-support" class="list-support collapse">
+    <div class="item-messenger">
+      <a href="https://m.me/hoa.luu.31105" class="item-icon" target="_blank"> <img class="img-lazyload img-fluid"
+          data-src="" style="opacity: 1;" src="https://cdn.pnj.io/images/image-update/2021/hotline/icon-facebook.svg">
+      </a>
+    </div>
+    <div class="item-hotline-wrap">
+      <div class="item-hotline">
+        <div class="hotline-phone-ring-circle"></div>
+        <div class="hotline-phone-ring-circle-fill"></div>
+        <div class="hotline-phone-ring-img-circle"> <a href="tel:0908169498" class="item-icon">
+            <img class="img-lazyload img-fluid" data-src="" style="opacity: 1;" src="./Asset/img/icon-hotline.png">
+          </a></div>
+
+      </div>
+    </div>
+    <div class="item-zalo">
+      <a href="https://zalo.me/0908169498" class="item-icon" target="_blank" rel="noopener"> <img
+          class="img-lazyload img-fluid" data-src="" style="opacity: 1;"
+          src="https://cdn.pnj.io/images/image-update/2021/hotline/icon-zalo.svg"></a>
+    </div>
+    <div class="item-close" id="icon-close">
+      <a class="item-icon" rel="noopener">
+        <i class="fa-solid fa-x img-lazyload img-fluid" data-src="" onclick="closeContact()"
+          style="opacity: 1; cursor: pointer;"></i> </a>
+    </div>
+  </div>
+  </div>
+
+  <!-- Modal Deskop -->
+  <div class="modal show fade" id="cartModal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content container">
+        <div class="modal-header">
+          <h5 class="modal-title display-6 fw-bold" id="exampleModalLabel">
+            ĐƠN HÀNG CỦA BẠN <i class="fa fa-shopping-cart"></i>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" onclick="closeModal()">
+            ×
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <!-- <th scope="col">ID</th> -->
+                  <th class="d-none d-sm-block">ID</th>
+                  <th class="d-none d-sm-block">Mặt hàng</th>
+                  <th>Ảnh</th>
+                  <th col="2">S.lượng</th>
+                  <!-- <th scope="col">Tiền công</th> -->
+                  <th class="d-none d-sm-block">Đơn giá (VNĐ)</th>
+                  <th>Thành tiền</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="orderList"></tbody>
+              <tfoot id="totalPayment"></tfoot>
+            </table>
+          </div>
+        </div>
+        <div id="modalFooter" class="modal-footer d-flex justify-content-between">
+          <div>
+            <button type="button" class="btn btn-success" data-dismiss="modal" onclick="closeModal()">
+              Chọn SP khác
+            </button>
+            <button type="button" class="btn btn-danger" id="emptyCart" onclick="resetCart()">
+              Xóa Giỏ hàng
+            </button>
+          </div>
+          <button id="pay" type="button" class="btn btn-primary" onclick="orderPayment ()">
+            Thanh toán
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+    </script>
+
+
+  <!-- JS  -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+    integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- SLICK JS  -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+    integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ 
+  <!-- OWL -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+    integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <!-- Sweet Alert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./Asset/JS/productGetPrice_Customer.js"></script>
+  <script src="./HL_Customer/services/cartAPI.js"></script>
+  <script src="./HL_Customer/view/showCarousel.js"></script>
+  <script src="./Asset/JS/showPriceTable.js"></script>
+  <!-- Data giỏ hàng được lưu dưới local hoặc API -->
+  <script src="./HL_Customer/controller/customer_local.js"></script>
+  <!-- <script src="./HL_Customer/controller/customer.js"></script> -->
+</body>
+
+</html>

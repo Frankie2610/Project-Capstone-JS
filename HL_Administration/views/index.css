@@ -1,0 +1,78 @@
+a {
+  cursor: pointer !important;
+}
+
+.spanWarning {
+  display: none;
+  color: red;
+  font-style: italic;
+}
+
+.searchName {
+  height: 50%;
+}
+
+.sortPrice {
+  height: 38px;
+}
+
+.dateTime p {
+  font-size: 18px;
+  margin-left: 15px;
+}
+
+#dateTime {
+  color: red;
+  background-color: gold;
+  padding: 5px;
+}
+
+.dateTime .globalGoldPrice {
+  color: red;
+  background-color: gold;
+  padding: 5px;
+}
+
+#DanhSachSP button {
+  margin-bottom: 15px !important;
+}
+
+#collapsibleNavId {
+  font-size: 18px !important;
+}
+
+.navbar .navbar-brand {
+  font-size: 26px;
+}
+
+#productPrice {
+  font-size: 13px;
+  height: 120px;
+}
+
+.tablePrice th {
+  padding: 5px;
+}
+
+.tablePrice td {
+  padding: 2px !important;
+}
+
+header {
+  font-size: 50px !important;
+}
+
+.up {
+  padding-left: 20px;
+  color: #6bdd28;
+  background-image: url(https://www.mihong.vn/themes/mihong/images/up.png);
+  background-repeat: no-repeat;
+  background-position: left;
+}
+
+.down {
+  color: #ef6237;
+  background-image: url(https://www.mihong.vn/themes/mihong/images/down.png);
+  background-repeat: no-repeat;
+  background-position: left;
+}

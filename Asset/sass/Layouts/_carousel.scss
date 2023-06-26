@@ -1,0 +1,109 @@
+.cover {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+//Ưu tiên mobile first
+.carousel {
+  padding: 100px 30px 30px 30px;
+  //Kế thừa lại các thuộc tính css của một class khác
+  @extend .cover;
+
+  // Thay vì viết:
+  // .carousel-content {
+
+  // }
+
+  //   //   &: đại diện cho lớp cha liền kề của nó
+  & &-content {
+    & > h1 {
+      @include textStyle(gold, 30px, 450);
+    }
+
+    & > h3 {
+      @include textStyle(black, $fs-9, $fw-2);
+      margin-bottom: 30px;
+    }
+
+    & > p {
+      @include textStyle($color-white-1, 18px, $fw-2);
+    }
+  }
+}
+
+//md: 768px
+//md trở lên tablet
+//lg trở lên deskop
+//Để sm ở dưới md thì màn hình deskop css ăn md
+@include responsive("sm") {
+  .carousel {
+    padding: 100px 30px 30px 30px;
+    & &-content {
+      & > h1 {
+        font-size: 32px;
+      }
+      & > h3 {
+        font-size: 24px;
+      }
+
+      & > p {
+        font-size: 20px;
+      }
+      & > .carousel-button button  {
+        font-size: 14px !important;
+      }
+    }
+  }
+}
+
+@include responsive("md") {
+  .carousel {
+    & &-content {
+      & > h1 {
+        font-size: 38px;
+      }
+
+      & > h3 {
+        font-size: 25px;
+      }
+      & > .carousel-button button  {
+        font-size: 16px !important;
+      }
+    }
+  }
+}
+
+@include responsive("lg") {
+  .carousel {
+    padding: 80px 30px 30px 30px;
+    & &-content {
+      & > h1 {
+        font-size: 45px;
+      }
+      & > h3 {
+        font-size: 28px;
+      }
+
+      & > p {
+        font-size: 22px;
+      }
+    }
+  }
+}
+
+@include responsive("xl") {
+  .carousel {
+    padding: 60px 30px 30px 30px;
+    & &-content {
+      & > h1 {
+        font-size: 50px;
+      }
+
+      & > h3 {
+        font-size: 30px;
+      }
+
+    }
+  }
+}

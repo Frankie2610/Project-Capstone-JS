@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Quản lý sản phẩm</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="shortcut icon" href="/Asset/img/logo1.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/HL_Administration/views/index.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="navbar navbar-expand-sm navbar-dark bg-danger">
+        <a class="navbar-brand" href="#"
+          ><i class="fa-sharp fa-regular fa-gem"></i> Hưng Lợi</a
+        >
+        <button
+          class="navbar-toggler d-lg-none"
+          type="button"
+          data-toggle="collapse"
+          data-target="#collapsibleNavId"
+          aria-controls="collapsibleNavId"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        ></button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="#"
+                >Trang chủ <span class="sr-only">(current)</span></a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Giới thiệu</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="dropdownId"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                >Cửa hàng</a
+              >
+              <div class="dropdown-menu" aria-labelledby="dropdownId">
+                <a class="dropdown-item" href="#">Trang chính</a>
+                <a class="dropdown-item" href="/index.html">Giỏ hàng</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/HL_Feedback/index_feedback.html"
+                >Phản hồi KH</a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="row">
+        <header class="display-4 my-4 col-7">Cập nhật sản phẩm Hưng Lợi</header>
+        <!-- PRODUCT  -->
+        <div id="productPrice" class="product container col-5">
+          <div id="priceTable" class="product__content form-group">
+            <div class="priceTable table mb-5">
+              <!-- <p class="title__price text-center">BẢNG GIÁ HƯNG LỢI</p> -->
+              <table class="table mt-4 tablePrice">
+                <thead class="text-center">
+                  <tr class="bg-warning">
+                    <th>LOẠI VÀNG</th>
+                    <th>MUA</th>
+                    <th>BÁN</th>
+                    <th>THAY ĐỔI</th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  <tr>
+                    <td>NỮ TRANG 999</td>
+                    <td id="priceBuying24k"></td>
+                    <td id="priceSelling24k"></td>
+                    <td id="sellChangePercent24k"></td>
+                  </tr>
+
+                  <tr>
+                    <td>NỮ TRANG 750</td>
+                    <td id="priceBuying18k"></td>
+                    <td id="priceSelling18k"></td>
+                    <td id="sellChangePercent18k"></td>
+                  </tr>
+
+                  <tr>
+                    <td>NỮ TRANG 680</td>
+                    <td id="priceBuying16k"></td>
+                    <td id="priceSelling16k"></td>
+                    <td id="sellChangePercent16k"></td>
+                  </tr>
+
+                  <tr>
+                    <td>NỮ TRANG 610</td>
+                    <td id="priceBuying14k"></td>
+                    <td id="priceSelling14k"></td>
+                    <td id="sellChangePercent14k"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phan tab menu -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            href="#DanhSachSP"
+            role="tab"
+            data-toggle="tab"
+            >Danh sách sản phẩm</a
+          >
+        </li>
+      </ul>
+      <br />
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <!--Danh sách sản phẩm -->
+        <div role="tabpanel" class="tab-pane in active" id="DanhSachSP">
+          <div class="row">
+            <div class="col-md-6 d-flex justify-content-between">
+              <!-- BEGIN BUTTOM THÊM MỚI -->
+              <button
+                id="btnThemSP"
+                class="btn btn-success"
+                data-toggle="modal"
+                data-target="#myModal"
+                onclick="addNewProduct()"
+              >
+                <i class="fa fa-plus mr-1"></i>
+                Thêm Mới
+              </button>
+              <div class="dateTime d-flex align-items-center">
+                <p>
+                  Cập nhật lúc:
+                  <span id="dateTime" style="color: red"></span>
+                  <span class="globalGoldPrice"
+                    ><span id="globalGoldBuyingPrice"></span
+                    ><span id="globalGoldSellingPrice"></span
+                  ></span>
+                  <!-- <span id="globalPriceDateTime"></span> -->
+                </p>
+              </div>
+              <!-- END BUTTON THÊM MỚI -->
+            </div>
+            <div class="col-md-6 d-flex">
+              <div class="form-group">
+                <select
+                  id="sortPrice"
+                  class="form-select sortPrice btn-danger mr-2"
+                  onchange="sortPrice()"
+                >
+                  <option value="0">Sắp Xếp Giá</option>
+                  <option value="1">Thấp-Cao</option>
+                  <option value="2">Cao-Thấp</option>
+                </select>
+              </div>
+              <!-- BEGIN TÌM KIẾM -->
+              <div class="input-group mb-3 searchName">
+                <input
+                  id="txtSearch"
+                  type="text"
+                  class="form-control"
+                  placeholder="Nhập từ khóa"
+                  aria-label="Recipient's username"
+                  aria-describedby="basic-addon2"
+                />
+                <div
+                  class="input-group-append"
+                  style="cursor: pointer"
+                  onclick="searchProduct()"
+                >
+                  <span class="input-group-text" id="basic-addon2"
+                    ><i class="fa fa-search"></i
+                  ></span>
+                </div>
+              </div>
+              <!-- END TÌM KIẾM -->
+            </div>
+          </div>
+          <div class="clear-fix"></div>
+          <div class="tblSanPham" id="tblSanPham">
+            <!-- BEGIN TABLE SẢN PHẨM -->
+            <table class="table table-bordered">
+              <thead>
+                <th class="text-center">STT</th>
+                <th class="text-center">Ảnh Sản Phẩm</th>
+                <th class="text-center">Tên Sản Phẩm</th>
+                <th class="text-center">Tuổi Vàng</th>
+                <th class="text-center">Cân nặng</th>
+                <th class="text-center">Tiền công</th>
+                <th class="text-center">Giá tiền (VNĐ)</th>
+                <th class="text-center">Action</th>
+              </thead>
+              <tbody id="tblDanhSachSP"></tbody>
+            </table>
+            <!-- END TABLE SẢN PHẨM -->
+          </div>
+          <br />
+        </div>
+        <!-- Kết thúc danh sách sản phẩm -->
+      </div>
+
+      <!--KetThuc Tabmenu-->
+
+      <!-- The Modal -->
+      <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Modal Heading</h4>
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Tên Sản Phẩm</label>
+                <input
+                  id="TenSP"
+                  class="form-control"
+                  placeholder="Nhập vào tên sản phẩm"
+                />
+                <span class="spanWarning" id="tbTenSP"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="">Tuổi Vàng: </label>
+                <select class="form-control" id="loaiSP">
+                  <option selected>Chọn tuổi Vàng</option>
+                  <option value="999">999</option>
+                  <option value="750">750</option>
+                  <option value="680">680</option>
+                  <option value="610">610</option>
+                  <option value="SJC">SJC</option>
+                  <option value="24k-ThầnTài">24k-ThầnTài</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="">Kiểu dáng</label>
+                <select
+                  class="form-control"
+                  id="productForm"
+                  onchange="getOption()"
+                >
+                  <option selected>Chọn kiểu dáng</option>
+                  <option>Nhẫn</option>
+                  <option>Bông tai</option>
+                  <option>Dây chuyền</option>
+                  <option>Lắc</option>
+                  <option>Others</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="">Auto/Manual</label>
+                <select
+                  class="form-control"
+                  id="manualOrAuto"
+                  onchange="getOption()"
+                >
+                  <option selected>Chọn Cân nặng/Giá tiền nhập tay</option>
+                  <option>Cân nặng (Chỉ)</option>
+                  <option>Giá tiền nhập tay (VNĐ)</option>
+                </select>
+              </div>
+
+              <div class="form-group" id="weighItem" style="display: none">
+                <label>Cân nặng (Chỉ)</label>
+                <input
+                  id="GiaSP"
+                  class="form-control"
+                  placeholder="Nhập vào cân nặng"
+                />
+                <span class="spanWarning" id="tbCanNangSP"></span>
+              </div>
+
+              <div class="form-group" id="priceManual" style="display: none">
+                <label>Giá tiền (VNĐ)</label>
+                <input
+                  id="GiaNhapTay"
+                  class="form-control"
+                  placeholder="Nhập vào giá tiền"
+                />
+                <span class="spanWarning" id="tbGiagSP"></span>
+              </div>
+
+              <div class="form-group" id="manufactureFee" style="display: none">
+                <label>Tiền công (VNĐ)</label>
+                <input
+                  id="TienCongSP"
+                  class="form-control"
+                  placeholder="Nhập vào Tiền công"
+                />
+                <span class="spanWarning" id="tbTienCongSP"></span>
+              </div>
+
+              <div class="form-group">
+                <label>Hình Ảnh</label>
+                <input
+                  id="HinhSP"
+                  class="form-control"
+                  placeholder="Nhập vào hình sản phẩm"
+                />
+                <span class="spanWarning" id="tbLinkSP"></span>
+              </div>
+              <div class="form-group">
+                <label>Mã Sản phẩm</label>
+                <input
+                  id="maSP"
+                  class="form-control"
+                  placeholder="Nhập mã sản phẩm"
+                />
+                <span class="spanWarning" id="tbMaSP"></span>
+              </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../controllers/sweetAlert.js"></script>
+    <script src="../services/productAPI.js"></script>
+    <script src="/Asset/JS/productGetPrice_Admin.js"></script>
+    <script src="/Asset/JS/showPriceTable.js"></script>
+    <script src="/HL_Administration/controllers/sortTable.js"></script>
+    <script src="../controllers/Administration.js"></script>
+  </body>
+</html>
