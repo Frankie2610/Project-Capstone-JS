@@ -54,7 +54,7 @@
   <header>
     <nav class="goldNav navbar navbar-expand-lg">
       <div class="container">
-        <a class="navbar-brand active mr-2" href="#">
+        <a class="navbar-brand active mr-2" onclick="location.reload()">
           <i class="fa-sharp fa-solid fa-gem"></i>
           Hưng Lợi</a>
         <button id="navBarButton" class="navbar-toggler" type="button" data-toggle="" data-target="#navbarNavAltMarkup"
@@ -85,8 +85,9 @@
             </li>
             <li class="searchKeyWord nav-item text-center">
               <form id="keyword" class="d-flex my-2 keyword justify-content-center text-center">
-                <input id="txtSearch" class="form-control" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
-                <a class="btn1 mt-2" href="#productInformation" onclick="searchProduct()">
+                <input id="txtSearch" class="form-control" placeholder="Tìm kiếm sản phẩm" aria-label="Search"
+                  onkeypress="handleKeyPress(event)" />
+                <a class="btn1 mt-2" onclick="searchProduct()">
                   <i id="searchIcon" class="fa fa-search"></i>
                 </a>
               </form>
@@ -101,12 +102,29 @@
             <span class="totalQuantity">0</span>
             <p>Giỏ hàng</p>
           </a>
+          <!-- <button id="btnThemSP" class="btn btn-success" data-toggle="modal" data-target="#cartModal">
+            <i class="fa fa-plus mr-1"></i>
+            Thêm Mới
+          </button> -->
         </div>
       </div>
 
     </nav>
+    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link" href="#">Pricing</a>
+          <a class="nav-link disabled">Disabled</a>
+        </div>
+      </div>
+    </nav> -->
   </header>
-  
   <!-- CAROUSEL  -->
   <section class="carousel bg-danger">
     <div class="container">
@@ -132,6 +150,7 @@
           </div>
         </div>
 
+        <!-- <div class="col-md-6 d-none d-md-block"> -->
         <div class="col-12 col-md-6">
           <div class="carousel__product d-flex owl-carousel">
             <div class="carousel__item ">
@@ -150,7 +169,6 @@
       </div>
     </div>
   </section>
-
   <!-- PRODUCT  -->
   <div id="productPrice" class="product container py-5">
     <div id="priceTable" class="product__content form-group">
@@ -199,13 +217,15 @@
           </tbody>
         </table>
       </div>
-      <select class="form-select mb-4 testAli bg-warning dropdownSelect" name="" id="productType"
+      <select class="form-select mb-4 testAli bg-warning dropdownSelect btn btn-warning" name="" id="productType"
         aria-label="Default select example" onchange="chooseProducts()">
-        <option selected value="0">Chọn sản phẩm</option>
-        <option value="1">Vàng 24k</option>
-        <option value="2">Vàng 18k</option>
-        <option value="3">Vàng 16k</option>
-        <option value="4">Vàng 14k</option>
+        <option selected value="0">Chọn loại vàng</option>
+        <option value="1">Vàng 999</option>
+        <option value="2">Vàng 750</option>
+        <option value="3">Vàng 680</option>
+        <option value="4">Vàng 610</option>
+        <!-- <option value="5">Vàng vỉ SJC</option>
+        <option value="6">Vàng vỉ Thần tài</option> -->
       </select>
       <div id="productInformation" class="text-center"></div>
     </div>
@@ -246,10 +266,18 @@
             <button id="sendFeedback" class="submit btn btn-primary">Gửi phản hồi</button>
           </form>
         </div>
+        <!-- <div class="mt-4">
+            <button class="button__contact btn1 btn1-style btn-style-secondary mt-3" href="contact.html">Contact
+              Us</button>
+          </div> -->
       </div>
     </div>
   </section>
 
+  <section id="feedback-section">
+    <div id="feedback" class="container pb-md-5 pb-4 mb-5"></div>
+  </section>
+  
   <!-- FOOTER -->
   <footer id="footer__contact" class="w3l-footer-22 position-relative">
     <div class="footer-sub">
@@ -270,7 +298,7 @@
                     href="mailto: tiemvanghungloi@gmail.com">tiemvanghungloi@gmail.com</a>
                 </div>
                 <div class="href2" style="cursor: pointer; color: #ff6e65">
-                  <span class="fa fa-phone" aria-hidden="true"></span><a href="tel: 0933882896">+84 93 3882896</a>
+                  <span class="fa fa-phone" aria-hidden="true"></span><a href="tel:+84 90 8169498">+84 90 8169498</a>
                 </div>
                 <div>
                   <a href="#contact-us" class="contact-para footer__map">
@@ -357,6 +385,15 @@
                 class="img-lazyload" src="./Asset/img/Menu-bar-footer/tabsale-default.jpg" alt="Khuyến mãi"> </span>
           </span> <span class="text"> Giá Vàng </span> </a> </div>
 
+      <!-- <div class="nav-item active cart ml-auto">
+            <a class="nav-link flex-column text-center" href="#" data-toggle="modal" data-target="#cartModal"
+              onclick="openModal()">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span class="totalQuantity">0</span>
+              <p>Giỏ hàng</p>
+            </a>
+          </div> -->
+
       <div class="item m-menu-fix__person ">
         <a class="flex-column text-center" href="#" data-toggle="modal" data-target="#modalId" onclick="openModal()">
           <span class="img-inner">
@@ -370,20 +407,35 @@
         </a>
       </div>
 
+      <!-- ICON THÔNG BÁO -->
+      <!-- <div id="menu-fix-announe" class="item m-menu-fix__announe"> <span class="img"> <span class="img-inner"
+            id="wrap-notifications"> <img class="img-lazyload"
+              src="https://cdn.pnj.io/images/image-update/layout/mobile/noti-default.svg" alt="Thông báo"> </span>
+        </span>
+        <span class="text"> Thông báo </span>
+      </div> -->
+
+
       <a id="menu-fix-support" class="item m-menu-fix__support" data-toggle="collapse" data-target="#list-support"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" onclick="support()">
         <span class="img"> <span class="img-inner" id="wrap-support">
+            <!-- <i class="img-lazyload fa-solid fa-phone fa-shake"></i>  -->
             <img class="img-lazyload" src="./Asset/img/Menu-bar-footer/Tuvan-icon-1.jpg" alt="Tư vấn">
           </span> </span>
         <span class="text"> Tư vấn </span> </a>
 
+      <!-- <div class="item m-menu-fix__category"> <span class="img"> <a class="img-inner btn"> 
+        <img class="img-lazyload"
+              src="./Asset/img/Menu-bar-footer/danhmuc-default.jpg" alt="Danh mục"> </a>
+        </span> <a class="text btn"> Danh mục </a> </div>
+    </div> -->
     </div>
   </div>
   <!-- SUPPORT CONTACT  -->
 
   <div id="list-support" class="list-support collapse">
     <div class="item-messenger">
-      <a href="#" class="item-icon" target="_blank"> <img class="img-lazyload img-fluid"
+      <a href="https://m.me/hoa.luu.31105" class="item-icon" target="_blank"> <img class="img-lazyload img-fluid"
           data-src="" style="opacity: 1;" src="https://cdn.pnj.io/images/image-update/2021/hotline/icon-facebook.svg">
       </a>
     </div>
@@ -391,14 +443,15 @@
       <div class="item-hotline">
         <div class="hotline-phone-ring-circle"></div>
         <div class="hotline-phone-ring-circle-fill"></div>
-        <div class="hotline-phone-ring-img-circle"> <a href="tel:0933882896" class="item-icon">
+        <div class="hotline-phone-ring-img-circle"> <a href="tel:0908169498" class="item-icon">
             <img class="img-lazyload img-fluid" data-src="" style="opacity: 1;" src="./Asset/img/icon-hotline.png">
           </a></div>
 
       </div>
     </div>
+
     <div class="item-zalo">
-      <a href="https://zalo.me/0933882896" class="item-icon" target="_blank" rel="noopener"> <img
+      <a href="https://zalo.me/0908169498" class="item-icon" target="_blank" rel="noopener"> <img
           class="img-lazyload img-fluid" data-src="" style="opacity: 1;"
           src="https://cdn.pnj.io/images/image-update/2021/hotline/icon-zalo.svg"></a>
     </div>
@@ -408,7 +461,33 @@
           style="opacity: 1; cursor: pointer;"></i> </a>
     </div>
   </div>
+
+
   </div>
+  <!-- <div class="m-menu-fix d-none">
+    <div class="m-menu-fix__inner">
+      <div class="item m-menu-fix__home active"> <a href="/"> <span class="img"> <span class="img-inner"> <img
+                class="img-lazyload" src="./Asset/img/Menu-bar-footer/home-state.jpg" alt="Trang chủ"> </span> </span>
+          <span class="text"> Trang chủ </span> </a> </div>
+      <div class="item m-menu-fix__km "> <a href="/khuyen-mai/"> <span class="img"> <span class="img-inner"> <img
+                class="img-lazyload" src="./Asset/img/Menu-bar-footer/tabsale-default.jpg" alt="Khuyến mãi"> </span>
+          </span> <span class="text"> Khuyến mãi </span> </a> </div>
+      <div class="item m-menu-fix__person "> <a href="#">
+          <span class="img"> <span class="img-inner"> <i class="fa-solid fa-cart-shopping"></i> </span> </span>
+          <span class="text">Giỏ hàng </span> </a> </div>
+      <div id="menu-fix-announe" class="item m-menu-fix__announe"> <span class="img"> <span class="img-inner"
+            id="wrap-notifications"> <img class="img-lazyload"
+              src="https://cdn.pnj.io/images/image-update/layout/mobile/noti-default.svg" alt="Thông báo"> </span>
+        </span> <span class="text"> Thông báo </span> </div>
+      <a id="menu-fix-support" class="item m-menu-fix__support" data-toggle="collapse" data-target="#list-support"
+        onclick="support()"> <span class="img"> <span class="img-inner" id="wrap-support"> <img class="img-lazyload"
+              src="./Hungloi_img/Menu-bar-footer/Tuvan-icon-1.jpg" alt="Tư vấn"> </span> </span>
+        <span class="text"> Tư vấn </span> </a>
+      <div class="item m-menu-fix__category"> <span class="img"> <span class="img-inner"> <img class="img-lazyload"
+              src="./Asset/img/Menu-bar-footer/danhmuc-default.jpg" alt="Danh mục"> </span>
+        </span> <span class="text"> Danh mục </span> </div>
+    </div>
+  </div> -->
 
   <!-- Modal Deskop -->
   <div class="modal show fade" id="cartModal" style="display: none;">
@@ -417,6 +496,7 @@
         <div class="modal-header">
           <h5 class="modal-title display-6 fw-bold" id="exampleModalLabel">
             ĐƠN HÀNG CỦA BẠN <i class="fa fa-shopping-cart"></i>
+            <!-- <p>An overview of your selected products</p> -->
           </h5>
           <button type="button" class="close" data-dismiss="modal" onclick="closeModal()">
             ×
@@ -459,6 +539,49 @@
       </div>
     </div>
   </div>
+
+  <!-- CART -->
+  <!-- <div>  <div class="cart-popup">
+    <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalTitleId"
+        aria-hidden="true" style="
+        display: block;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">Cart</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body cart-popup-body">
+                    <div class="container-fluid">
+                        <div id="cartContent">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer cart-popup-btn">
+                    <button class="btn bg-dark color-grey" data-bs-dismiss="modal">Close</button>
+                    <button class="btn bg-color-dark color-grey" onclick="clearButton()">Clear</button>
+                    <button class="btn bg-color-yellow" onclick="payButton()">Pay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div></div>
+
+
+<script>
+  var modalId = document.getElementById('modalId');
+
+  modalId.addEventListener('show.modal', function (event) {
+      // Button that triggered the modal
+      let button = event.relatedTarget;
+      // Extract info from data-bs-* attributes
+      let recipient = button.getAttribute('data-bs-whatever');
+
+      // Use above variables to manipulate the DOM
+  });
+</script> -->
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
     </script>
@@ -473,11 +596,73 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
     integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
- 
+  <!-- <script>
+    // .service__items cần chạy hiệu ứng, nên gọi div cha nó là service__content
+    $(".carousel__product").slick({
+      // infinite: tạo vòng lặp
+      infinite: true,
+      // slidesToShow: số items hiển thị
+      slidesToShow: 1,
+      // slidesToScroll: mỗi lần scroll mấy slide?
+      slidesToScroll: 1,
+      // dots dấu chấm tròn
+      dots: true,
+      // autoplay tự động chạy slide
+      autoplay: true,
+      // autoplaySpeed: tốc độ tự động chạy đơn vị ms. 300ms = 0.3s
+      autoplaySpeed: 1500,
+      // arrows: tắt dấu mũi tên hai bên slide
+      // arrows: false,
+    });
+  </script> -->
+
   <!-- OWL -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
     integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- <script>
+    $(".carousel__product").owlCarousel({
+      loop: true,
+      autoplay: true,
+      autoplayTimeout: 4000,
+      dots: true,
+      responsive: {
+        0: {
+          items: 1,
+        },
+        600: {
+          items: 1,
+        },
+        1000: {
+          items: 1,
+        },
+      },
+    });
+  </script> -->
+
+  <!-- button Bottom to Top -->
+  <!-- <script>
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+    
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("myBtn").style.display = "block";
+        } else {
+            document.getElementById("myBtn").style.display = "none";
+        }
+    }
+    
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+    </script> -->
+
+  <!-- Block Watching Source Code  -->
+  <!-- command -->
+  <!-- <script src="./Asset/JS/res.js"></script> -->
 
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/modules/series-label.js"></script>
@@ -486,14 +671,29 @@
 
   <!-- Sweet Alert -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- <script>
+    async function getUser() {
+      const response = await fetch('http://www.mihong.vn/api/v1/gold/prices/current', {
+        mode: 'no-cors',
+        method: 'GET'
+      }) // (*)
+      return await response.json()
+    }
+    getUser().then(user => console.table(user))
+  </script> -->
+  <!-- <script src="/Asset/JS/server.js"></script> -->
+  <!-- <script src="./HL_Administration/models/Product.js"></script> -->
+  
   <script src="./Asset/JS/productGetPrice_Customer.js"></script>
   <script src="./HL_Customer/services/cartAPI.js"></script>
   <script src="./HL_Customer/view/showCarousel.js"></script>
-  <script src="./Asset/JS/showPriceTable.js"></script>  
+  <script src="./Asset/JS/showPriceTable.js"></script>
   <script src="./Asset/JS/validation.js"></script>
   <!-- Data giỏ hàng được lưu dưới local hoặc API -->
   <script src="./HL_Customer/controller/customer_local.js"></script>
   <!-- <script src="./HL_Customer/controller/customer.js"></script> -->
+
 </body>
 
 </html>

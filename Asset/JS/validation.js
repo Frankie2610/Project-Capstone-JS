@@ -31,14 +31,18 @@ const checkEmpty = (inputId, error) => {
 const checkEmail = (inputId, error) => {
     let input = document.getElementById(inputId);
     const regexEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-    if (regexEmail.test(input.value)) {
-        document.getElementById(error).innerHTML = "";
-        document.getElementById(error).style.display = "none";
-        return true;
+    if (input.value) {
+        if (regexEmail.test(input.value)) {
+            document.getElementById(error).innerHTML = "";
+            document.getElementById(error).style.display = "none";
+            return true;
+        } else {
+            document.getElementById(error).innerHTML = "*Email của bạn đang bị sai định dạng 😥.";
+            document.getElementById(error).style.display = "block";
+            return false;
+        }
     } else {
-        document.getElementById(error).innerHTML = "*Email của bạn đang bị sai định dạng 😥.";
-        document.getElementById(error).style.display = "block";
-        return false;
+        return true;
     }
 };
 
@@ -70,7 +74,6 @@ document.getElementById("phoneNumber").onblur = () => {
 document.getElementById("feedbackCustomer").onblur = () => {
     checkEmpty("feedbackCustomer", "message__error");
 };
-
 document.getElementById("sendFeedback").onclick = () => {
     checkAll();
 };

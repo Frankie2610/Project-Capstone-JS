@@ -6,6 +6,7 @@ URL3 = "https://6426b4b4556bad2a5b55dbf6.mockapi.io/mihongPrice"; //MockApi copy
 URL4 = "https://63e8641bcbdc565873852dbf.mockapi.io/api/productInCart"; //MockApi giỏ hàng
 const URL5 = "https://6426b4b4556bad2a5b55dbf6.mockapi.io/feedback";
 const URL6 = "https://www.mihong.vn/api/v1/gold/prices/world/current";
+const URL7 = "https://6426b4b4556bad2a5b55dbf6.mockapi.io/feedback";
 
 // Lấy dữ liệu sản phẩm từ API cửa tiệm về và render ra.
 const getProducts = async () => {

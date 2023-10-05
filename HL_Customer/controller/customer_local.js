@@ -26,30 +26,31 @@ function closeContact() {
 function chooseProducts() {
   let productType = +document.getElementById("productType").value;
   let arraySJC = []; //Mảng Vàng miếng SJC
-  let array24k = []; //Mảng Vàng nhẫn 24k
-  let array18k = []; //Mảng Vàng nhẫn 24k
-  let array16k = []; //Mảng Vàng nhẫn 24k
-  let array14k = []; //Mảng Vàng nhẫn 24k
+  let array999 = []; //Mảng Vàng nhẫn 24k
+  let array750 = []; //Mảng Vàng nhẫn 24k
+  let array680 = []; //Mảng Vàng nhẫn 24k
+  let array610 = []; //Mảng Vàng nhẫn 24k
   let arrayThanTai = []; //Mảng Vàng vỉ Thần Tài
 
+  // //productList đang là 1 Promise, nên phải đưa nó vào hàm then () để xử lý giá trị tiếp
   for (i = 0; i < productList.length; i++) {
-    if (productList[i].goldPurity === "24k") {
-      array24k.push(productList[i]);
+    if (productList[i].goldPurity === "999") {
+      array999.push(productList[i]);
     }
   }
   for (i = 0; i < productList.length; i++) {
-    if (productList[i].goldPurity === "18k") {
-      array18k.push(productList[i]);
+    if (productList[i].goldPurity === "750") {
+      array750.push(productList[i]);
     }
   }
   for (i = 0; i < productList.length; i++) {
-    if (productList[i].goldPurity === "16k") {
-      array16k.push(productList[i]);
+    if (productList[i].goldPurity === "680") {
+      array680.push(productList[i]);
     }
   }
   for (i = 0; i < productList.length; i++) {
-    if (productList[i].goldPurity === "14k") {
-      array14k.push(productList[i]);
+    if (productList[i].goldPurity === "610") {
+      array610.push(productList[i]);
     }
   }
   for (i = 0; i < productList.length; i++) {
@@ -62,17 +63,18 @@ function chooseProducts() {
       arrayThanTai.push(productList[i]);
     }
   }
+
   if (!productType) {
     alert("Bạn chưa chọn sản phẩm");
     return;
   } else if (productType === 1) {
-    renderProductsCustomer(array24k);
+    renderProductsCustomer(array999);
   } else if (productType === 2) {
-    renderProductsCustomer(array18k);
+    renderProductsCustomer(array750);
   } else if (productType === 3) {
-    renderProductsCustomer(array16k);
+    renderProductsCustomer(array680);
   } else if (productType === 4) {
-    renderProductsCustomer(array14k);
+    renderProductsCustomer(array610);
   } else if (productType === 5) {
     renderProductsCustomer(arraySJC);
   } else if (productType === 6) {
@@ -317,27 +319,25 @@ function decreaseQuantity(productCartId) {
 function addToCart(productId) {
   // let cartArray;  Set lại dòng này, rồi refresh lại trang web rồi xóa đi.
   // //productList đang là 1 Promise, nên phải đưa nó vào hàm then () để xử lý giá trị tiếp
-  productList.then((productList) => {
-    let count = 0;
-    let index = productList.findIndex((product) => {
-      return product.id == productId;
-    });
-    let productCart = productList[index]; //Sp muốn thêm vào giỏ
-    for (let i = 0; i < cartArray.length; i++) {
-      if (productCart.id === cartArray[i].id) {
-        // getProductCart();
-        cartArray[i].quantity = +cartArray[i].quantity + 1;
-        count++;
-        break;
-      }
-    }
-    if (!count) {
-      cartArray.push(productCart);
-      productCart.quantity = 1;
-    }
-    // renderTable(cartArray);
-    storeProductsInCart();
+  let count = 0;
+  let index = productList.findIndex((product) => {
+    return product.id == productId;
   });
+  let productCart = productList[index]; //Sp muốn thêm vào giỏ
+  for (let i = 0; i < cartArray.length; i++) {
+    if (productCart.id === cartArray[i].id) {
+      // getProductCart();
+      cartArray[i].quantity = +cartArray[i].quantity + 1;
+      count++;
+      break;
+    }
+  }
+  if (!count) {
+    cartArray.push(productCart);
+    productCart.quantity = 1;
+  }
+  // renderTable(cartArray);
+  storeProductsInCart();
 }
 
 function openModal() {
@@ -350,15 +350,24 @@ function closeModal() {
 
 //Hàm lấy phản hồi khách hàng
 getElement("#sendFeedback").addEventListener("click", async (evt) => {
-  // debugger;
   try {
+    console.log(checkValid);
     evt.preventDefault();
     if (checkValid) {
+      let time = new Date();
+      let date = time.getDate();
+      let month = time.getMonth() + 1;
+      let year = time.getFullYear();
+      let hour = time.getHours();
+      let minute = time.getMinutes();
+      let second = time.getSeconds();
+
       const info = {
         name: getElement("#nameCustomer").value,
         email: getElement("#emailCustomer").value,
         phone: getElement("#phoneNumber").value,
         feedback: getElement("#feedbackCustomer").value,
+        timeComment: date + "/" + month + "/" + year + ", " + hour + ":" + minute + ":" + second
       };
       await apiSendInformation(info);
       resetFeedback();
@@ -375,6 +384,40 @@ function resetFeedback() {
   getElement("#emailCustomer").value = "";
   getElement("#phoneNumber").value = "";
   getElement("#feedbackCustomer").value = "";
+}
+
+let customerData = [];
+
+getFeedback();
+async function getFeedback() {
+  try {
+    const { data: customerData } = await axios.get(URL7);
+    renderFeedbackCustomer(customerData);
+  } catch (error) {
+    alert("Lấy dữ liệu phản hồi Khách hàng thất bại");
+  }
+}
+
+//Dùng hàm reduce
+function renderFeedbackCustomer(customerData) {
+  // debugger;
+  let html = customerData.reduce((result, customer, index) => {
+    return (
+      result +
+      `
+        <div style="padding: 0 15px!important; border-top: 1px solid #dadbdd;">
+          <button style="border-radius: 100%; cursor: initial; margin-top: 16px" class="btn btn-success">
+            <span>${customer.name.charAt(0).toUpperCase()}</span>
+          </button>
+          <span style="font-weight: 600; font-size: 17px; margin: 0 10px 0 10px; ">${customer.name}</span>
+          <span> | ${customer.timeComment}</span>
+          <p style="margin-left: 54px">${customer.feedback}</p>
+        </div>
+      
+      `
+    );
+  }, "");
+  document.getElementById("feedback").innerHTML = html;
 }
 
 // =================Local Storage======================
@@ -420,24 +463,29 @@ function getElement(selector) {
 
 function searchProduct() {
   // //productList đang là 1 Promise, nên phải đưa nó vào hàm then () để xử lý giá trị tiếp
-  productList.then((productList) => {
-    // B1: DOM
-    let search = getElement("#txtSearch").value;
-    // B2: Lọc những product có name khớp với giá trị search
-    let newProductList = productList.filter((product) => {
-      //Lọc ra mảng mới có product khớp điều kiện
-      let name = product.name.toLowerCase();
-      search = search.toLowerCase();
-      return name.indexOf(search) !== -1;
-    });
-    if (newProductList.length > 0) {
-      renderProductsCustomer(newProductList);
-    } else {
-      alert(
-        "Sản phẩm bạn tìm hiện chưa có ở cửa hàng 🥺.Vui lòng liên hệ số 0908169498-Chị Hoa để có thông tin sớm nhất 🥰"
-      );
-    }
-    openModalNavBar(); //Đóng Navbar lại
-    getElement("#txtSearch").value = "";
+  // B1: DOM
+  let search = getElement("#txtSearch").value;
+  // B2: Lọc những product có name khớp với giá trị search
+  let newProductList = productList.filter((product) => {
+    //Lọc ra mảng mới có product khớp điều kiện
+    let name = product.name.toLowerCase();
+    search = search.toLowerCase();
+    return name.indexOf(search) !== -1;
   });
+  if (newProductList.length > 0) {
+    renderProductsCustomer(newProductList);
+    window.location.href = "#productInformation"
+  } else {
+    alert(
+      "Sản phẩm bạn tìm hiện chưa có ở cửa hàng 🥺.Vui lòng liên hệ số 0908169498-Chị Hoa để có thông tin sớm nhất 🥰"
+    );
+  }
+  openModalNavBar(); //Đóng Navbar lại
+  getElement("#txtSearch").value = "";
 }
+
+const handleKeyPress = (event) => {
+  if (event.key === "Enter") {
+    searchProduct()
+  }
+};
