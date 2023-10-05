@@ -697,7 +697,8 @@ header .cart-header .totalQuantity {
   padding: 0 15px;
 }
 
-.contact__form input {
+.contact__form input,
+.contact__form textarea {
   /* rem phụ thuộc font-size (thẻ html, root) */
   /* em phụ thuộc font-size gần nhất  */
   font-size: 15px;
@@ -713,7 +714,7 @@ header .cart-header .totalQuantity {
 .contact__form textarea {
   border: 2px solid black;
   transition: all 0.5s;
-  margin: 10px;
+  margin: 5px 10px 5px 10px;
 }
 
 .contact__form .submit {
@@ -733,6 +734,15 @@ header .cart-header .totalQuantity {
   border-right: 1px solid #d9dadb;
 }
 
+#name__error,
+#email__error,
+#phone__error,
+#message__error {
+  text-align: start;
+  padding-left: 10px;
+  color: #ff6e65;
+}
+
 @media (min-width: 991.2px) {
   .contact__content {
     margin: auto;
@@ -745,6 +755,9 @@ header .cart-header .totalQuantity {
   }
   .contact__form {
     width: 40%;
+  }
+  .contact__form button {
+    margin-top: 5px;
   }
 }
 @media (max-width: 430px) {

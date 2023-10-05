@@ -8,10 +8,10 @@
   }
 
   /* .contact__form {
-    position: relative;
-    top: 0;
-    left: 0;
-  } */
+  position: relative;
+  top: 0;
+  left: 0;
+} */
 
   .contact__form p {
       font-size: 25px;
@@ -30,7 +30,8 @@
       padding: 0 15px;
   }
 
-  .contact__form input {
+  .contact__form input,
+  .contact__form textarea {
       /* rem phụ thuộc font-size (thẻ html, root) */
       /* em phụ thuộc font-size gần nhất  */
       font-size: 15px;
@@ -46,7 +47,7 @@
   .contact__form textarea {
       border: 2px solid black;
       transition: all 0.5s;
-      margin: 10px;
+      margin: 5px 10px 5px 10px;
   }
 
   .contact__form .submit {
@@ -66,6 +67,15 @@
       border-right: 1px solid #d9dadb;
   }
 
+  #name__error,
+  #email__error,
+  #phone__error,
+  #message__error {
+      text-align: start;
+      padding-left: 10px;
+      color: #ff6e65;
+  }
+
   @media (min-width: 991.2px) {
       .contact__content {
           margin: auto;
@@ -80,6 +90,10 @@
 
       .contact__form {
           width: 40%;
+
+          button {
+              margin-top: 5px;
+          }
       }
   }
 
@@ -113,6 +127,4 @@
               font-size: 12px !important;
           }
       }
-
-
   }

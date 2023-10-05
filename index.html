@@ -227,10 +227,22 @@
         <div class="contact__form text-center">
           <p class="text-center">Gửi phản hồi cho Hưng Lợi</p>
           <form action="" method="get">
-            <input type="text" placeholder="Tên của bạn" id="nameCustomer">
-            <input type="email" name="" id="emailCustomer" placeholder="Email của bạn">
-            <input type="phoneNumber" name="" id="phoneNumber" placeholder="Số điện thoại của bạn">
-            <textarea name="Add Question" id="feedbackCustomer" cols="30" rows="7" placeholder="   Nội dung"></textarea>
+
+            <input type="text" placeholder="Tên của bạn" id="nameCustomer" name="Tên">
+            <span id="name__error"></span>
+
+
+            <input type="email" name="Email" id="emailCustomer" placeholder="Email của bạn">
+            <span id="email__error"></span>
+
+
+            <input type="phoneNumber" name="SĐT" id="phoneNumber" placeholder="Số điện thoại của bạn">
+            <span id="phone__error"></span>
+
+
+            <textarea name="Message" id="feedbackCustomer" cols="30" rows="7" placeholder="Nội dung"></textarea>
+            <span id="message__error"></span>
+
             <button id="sendFeedback" class="submit btn btn-primary">Gửi phản hồi</button>
           </form>
         </div>
@@ -477,7 +489,8 @@
   <script src="./Asset/JS/productGetPrice_Customer.js"></script>
   <script src="./HL_Customer/services/cartAPI.js"></script>
   <script src="./HL_Customer/view/showCarousel.js"></script>
-  <script src="./Asset/JS/showPriceTable.js"></script>
+  <script src="./Asset/JS/showPriceTable.js"></script>  
+  <script src="./Asset/JS/validation.js"></script>
   <!-- Data giỏ hàng được lưu dưới local hoặc API -->
   <script src="./HL_Customer/controller/customer_local.js"></script>
   <!-- <script src="./HL_Customer/controller/customer.js"></script> -->
