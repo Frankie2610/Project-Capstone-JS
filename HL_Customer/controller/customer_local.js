@@ -5,6 +5,9 @@ renderTable(cartArray); //re-render table cart khi refresh lại trang
 let productCart;
 let pricesList;
 
+let customerData = []; //Khai báo mảng thông tin feedback của KH
+getFeedback(); //lấy dữ liệu feedback
+
 //Hàm đóng/mở modal navbar
 function openModalNavBar() {
   getElement("#goldNavbar").classList.toggle("show");
@@ -372,6 +375,7 @@ getElement("#sendFeedback").addEventListener("click", async (evt) => {
       await apiSendInformation(info);
       resetFeedback();
       alert("👉Cám ơn bạn đã góp ý. Hưng Lợi sẽ liên lạc lại bạn sớm nhất 🥰🤗");
+      getFeedback();
     }
   } catch {
     alert("Gửi phản hồi thất bại");
@@ -386,9 +390,6 @@ function resetFeedback() {
   getElement("#feedbackCustomer").value = "";
 }
 
-let customerData = [];
-
-getFeedback();
 async function getFeedback() {
   try {
     const { data: customerData } = await axios.get(URL7);
@@ -400,20 +401,22 @@ async function getFeedback() {
 
 //Dùng hàm reduce
 function renderFeedbackCustomer(customerData) {
-  // debugger;
+  customerData = customerData.reverse();
+  getElement("#feedbackCount").innerHTML = +customerData.length;
   let html = customerData.reduce((result, customer, index) => {
     return (
       result +
       `
-        <div style="padding: 0 15px!important; border-top: 1px solid #dadbdd;">
-          <button style="border-radius: 100%; cursor: initial; margin-top: 16px" class="btn btn-success">
+        <div style="padding: 15px; border-top: 1px solid #dadbdd; display: flex">
+          <button style="border-radius: 100%; cursor: initial; max-height: 40px; max-width: 40px" class="btn btn-success">
             <span>${customer.name.charAt(0).toUpperCase()}</span>
           </button>
-          <span style="font-weight: 600; font-size: 17px; margin: 0 10px 0 10px; ">${customer.name}</span>
-          <span> | ${customer.timeComment}</span>
-          <p style="margin-left: 54px">${customer.feedback}</p>
+          <div>          
+          <span style="font-weight: 600; font-size: 17px; margin: 0 0 0 10px;">${customer.name}</span>
+          <p style="margin: 5px 0 5px 10px;">${customer.feedback}</p>        
+          <span style="font-size: 14px; display: block; margin-left: 10px; color:#cecece">${customer.timeComment}</span>
+          </div>
         </div>
-      
       `
     );
   }, "");

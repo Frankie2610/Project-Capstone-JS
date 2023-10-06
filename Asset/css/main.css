@@ -1552,4 +1552,21 @@ button.cart #cart-number, button.cart #cart-number-lg {
   .cart-popup-item > p {
     width: 30%;
   }
+}
+#feedback-section #feedback-container h3 {
+  font-weight: 600;
+  font-size: 25px;
+  color: #f55f8d;
+}
+
+@media screen and (max-width: 991px) {
+  #feedback-section #feedback-container h3 {
+    font-size: 22px;
+  }
+}
+@media screen and (max-width: 576px) {
+  #feedback-section #feedback-container h3 {
+    margin-left: 10px;
+    font-size: 20px;
+  }
 }/*# sourceMappingURL=main.css.map */
