@@ -495,7 +495,7 @@ header .cart-header .totalQuantity {
     text-decoration: none !important;
     padding: 6px !important;
     text-align: start !important;
-    font-size: 12px !important;
+    font-size: 14px !important;
   }
   .product .product-info a {
     font-size: 16px;
@@ -513,6 +513,9 @@ header .cart-header .totalQuantity {
   .product .product__item ul li {
     text-decoration: none !important;
     padding: 8px !important;
+  }
+  .product .product__detail {
+    padding-left: 10px !important;
   }
 }
 @media screen and (max-width: 768px) {
@@ -537,7 +540,7 @@ header .cart-header .totalQuantity {
     font-size: 16px !important;
   }
   .product .card .product-info {
-    padding: 15px !important;
+    padding: 10px !important;
   }
   .product .card .product-info h2 {
     font-size: 14px;
@@ -551,7 +554,7 @@ header .cart-header .totalQuantity {
     text-decoration: none !important;
     padding: 6px !important;
     text-align: start !important;
-    font-size: 10px !important;
+    font-size: 12px !important;
   }
   .product .card .product-info .product__item ul li {
     text-decoration: none !important;
@@ -682,11 +685,6 @@ header .cart-header .totalQuantity {
     padding-right: 3px !important;
     padding-left: 3px !important;
     max-width: 48% !important;
-  }
-}
-@media screen and (max-width: 430px) {
-  #productInformation .product-info > .product__detail {
-    padding-left: 0 !important;
   }
 }
 /* CONTACT US */
