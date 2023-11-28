@@ -91,22 +91,23 @@ function renderProductsCustomer(products) {
     return (
       result +
       `
-      <div id="${product.id
-      }" class="product__item col-6 col-md-4 d-inline-flex ${product.goldPurity
-      }">
+      <div 
+      id="${product.id}" 
+      class="product__item col-6 col-md-4 d-inline-flex ${product.goldPurity}"
+      >
         <div class="card">
           <img
-            class="imgProduct img-fluid"
+            class="imgProduct"
             src="${product.img}"
             alt="${product.name}"
           />
           <a class="text-center mt-3">${product.name}</a>
           <div class="product-footer d-flex justify-content-between">
-            <a class="d-flex ml-3 mb-3 align-items-center">
+            <a class="d-flex ms-3 mb-3 align-items-center">
               <i class="fa fa-star" aria-hidden="true"></i>
-              5
+             5
             </a>
-            <p class="mr-3">68 đã bán</p>
+            <p class="me-3">68 đã bán</p>
           </div>
       <div
                 class="product-info flex-column justify-content-center align-items-center text-center"
@@ -147,76 +148,49 @@ function renderTable(cartArray) {
     return (
       result +
       `
-          <tr>
-          <td class="d-none d-sm-block">${productCart.id}</td>
-          <td class="d-none d-sm-block">${productCart.name}</td>
-          <td>
-            <img src="${productCart.img}" with="70" height="70" />
-          </td>
-          <td>
-          <button type='button' class='btn decrease' onclick="decreaseQuantity(${productCart.id
+      <div style="border-top: none !important" class="table d-flex justify-content-between">
+          <div>
+            <img src="${productCart.img}" with="80" height="80" />
+          </div>
+          <div>
+          <div class="productCartName">${productCart.name}</div>
+          <div class="d-flex align-items-center">
+          <div class="productCartPrice">${productCart.price.toLocaleString()} ₫</div>
+          <div class="quantityGroup">
+          <button type='button' class='btn btn-light decrease' onclick="decreaseQuantity(${productCart.id
       })">-</button>
           <span id="numberCart">${productCart.quantity}</span>
-          <button type='button' class='btn increase' onclick="increaseQuantity(${productCart.id
+          <button type='button' class='btn btn-light increase' onclick="increaseQuantity(${productCart.id
       })">+</button>
-          </td>
-          <td class="d-none d-sm-block">  ${new Intl.NumberFormat(
-        "vn-VN"
-      ).format(productCart.price)}</td>
-          <td>${calculateCost(productCart.price, productCart.quantity)}</td>
-          <td>
-          <button
-          class="btn btn-danger deleteButton text-center"
+          </div>
+            </div>
+          </div>
+           <div class="deleteButton">
+          <span
+          class="fa-regular fa-trash-can deleteButton text-center"
           onclick="deleteProduct('${productCart.id}')"
-          >Xóa
-          </button>
-          </td>
-        </tr>
+          type="button"
+          >
+          </span>
+          </div>
+     </div>
       `
     );
   }, "");
   document.getElementById("orderList").innerHTML = html;
-  // calculate payment
-  const subTotal = 30000;
-  const bankCharge = 10000;
-
-  //TỔNG HÓA ĐƠN CÓ PHỤ PHÍ
-  // getElement("#totalPayment").innerHTML = `
-  //     <tr>
-  //         <th class='text-end' colspan='2'>Phí Ship (nếu có): </th>
-  //         <td>${new Intl.NumberFormat("vn-VN").format(subTotal)} (VNĐ)</td>
-  //     </tr>
-  //     <tr>
-  //         <th class='text-end' colspan='2'>Phí Ngân Hàng</th>
-  //         <td scope='col'>${new Intl.NumberFormat("vn-VN").format(
-  //           bankCharge
-  //         )} (VNĐ)</td>
-  //     </tr>
-  //     <tr>
-  //         <th class='text-end' colspan='2'>
-  //             <i class="fa fa-arrow-right"></i> Tổng chi phí:
-  //         </th>
-  //         <td scope='col'> ${new Intl.NumberFormat("vn-VN").format(
-  //           calculateTotalCost() + subTotal + bankCharge
-  //         )} (VNĐ)
-  //         </td>
-  //     </tr>
-  // `;
 
   getElement("#totalPayment").innerHTML = `
-      <tr>
-          <th class='text-end' colspan='2'>
-              <i class="fa fa-arrow-right"></i> Tổng chi phí: 
-          </th>
-          <td scope='col'> ${new Intl.NumberFormat("vn-VN").format(
-    calculateTotalCost()
-  )} (VNĐ)
-          </td>
-      </tr>
+      <div class="d-flex justify-content-between">
+          <span>
+              <i class="fa fa-arrow-right"></i> Tổng: 
+          </span>
+          <span class="ms-3">${calculateTotalCost()} ₫
+          </span>
+      </div>
   `;
   // setup and update the total quantity of products in UI cart
-  getElement(".totalQuantity").innerHTML = calculateTotalQuantity().toString();
-  getElement(".totalQuantity2").innerHTML = calculateTotalQuantity().toString();
+  getElement(".totalQuantity").innerHTML = calculateTotalQuantity()
+  getElement(".totalQuantity2").innerHTML = calculateTotalQuantity()
 }
 
 //Hàm thanh toán Đơn hàng
@@ -236,7 +210,6 @@ function orderPayment() {
       timer: 1500,
     });
     cartArray = [];
-    closeModal();
     storeProductsInCart();
   }
 }
@@ -253,24 +226,23 @@ function resetCart() {
     showConfirmButton: false,
     timer: 1500,
   });
-  closeModal();
 }
 
 //Hàm tính Tổng số sản phẩm trong giỏ hàng
 function calculateTotalQuantity() {
   let totalQuantity = 0;
   for (let i = 0; i < cartArray.length; i++) {
-    totalQuantity += +cartArray[i].quantity.toString();
+    totalQuantity += +cartArray[i].quantity
   }
   return totalQuantity;
 }
 
 //Hàm tính chi phí tổng tiền theo sản phẩm
 function calculateCost(productCartPrice, productCartQuantity) {
-  let totalCostProduct = new Intl.NumberFormat("vn-VN").format(
+  let totalCostProduct =
     productCartPrice * productCartQuantity
-  );
-  return totalCostProduct;
+    ;
+  return totalCostProduct.toLocaleString();
 }
 
 //Hàm tính tổng tiền của Đơn hàng
@@ -279,7 +251,7 @@ function calculateTotalCost() {
   for (let i = 0; i < cartArray.length; i++) {
     totalOrderExpense += cartArray[i].price * cartArray[i].quantity;
   }
-  return totalOrderExpense;
+  return totalOrderExpense.toLocaleString();
 }
 
 //Hàm xóa sản phẩm trong giỏ hàng theo Id
@@ -408,7 +380,7 @@ function renderFeedbackCustomer(customerData) {
       result +
       `
         <div style="padding: 15px; border-top: 1px solid #dadbdd; display: flex">
-          <button style="border-radius: 100%; cursor: initial; max-height: 40px; max-width: 40px" class="btn btn-success">
+          <button style="border-radius: 100%; cursor: initial; max-height: 40px; width: 40px !important" class="btn btn-success">
             <span>${customer.name.charAt(0).toUpperCase()}</span>
           </button>
           <div>          

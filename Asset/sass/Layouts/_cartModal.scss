@@ -18,6 +18,8 @@
             border: none;
 
             .table {
+                border-top: none !important;
+
                 thead {
                     background-color: $color-dark-2;
 
@@ -34,7 +36,8 @@
                             color: white;
                         }
 
-                        .increase, .decrease {
+                        .increase,
+                        .decrease {
                             background-color: $color-yellow-2;
                         }
                     }
@@ -47,6 +50,79 @@
 
             button {
                 color: white;
+            }
+        }
+    }
+}
+
+#offcanvasRight {
+    #orderList {
+        .productCartName {
+            font-size: 20px;
+            font-weight: 550;
+        }
+
+        .productCartPrice {
+            font-size: 18px;
+            font-weight: 500;
+            color: #f57224;
+        }
+
+        .deleteButton {
+            font-size: 18px;
+        }
+    }
+
+    #totalPayment {
+        font-size: 18px;
+        font-weight: 600;
+        color: #f57224;
+    }
+
+    #pay {
+        width: 250px;
+        margin-top: 30px;
+    }
+
+    #delete {
+        width: 250px;
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    #offcanvasRight {
+        width: 88%;
+
+        #orderList {
+            .productCartName {
+                font-size: 18px;
+                font-weight: 550;
+            }
+
+            .productCartPrice {
+                padding: 6px;
+                font-size: 16px;
+                font-weight: 500;
+                color: #f57224;
+            }
+
+            & .quantityGroup {
+                padding: 6px;
+
+                &>.decrease,
+                &>.increase {
+                    padding: 0.2rem 0.4rem !important;
+                }
+            }
+
+
+            #numberCart {
+                font-size: 15px;
+            }
+
+            .deleteButton {
+                font-size: 18px;
             }
         }
     }

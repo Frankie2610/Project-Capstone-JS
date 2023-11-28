@@ -144,8 +144,11 @@ header .navbar-brand {
   font-size: 27px;
 }
 header a {
-  color: white;
+  color: white !important;
   cursor: pointer !important;
+}
+header a:hover {
+  color: #0056b3 !important;
 }
 header .searchKeyWord form {
   position: relative;
@@ -153,7 +156,7 @@ header .searchKeyWord form {
 header .searchKeyWord form a {
   position: absolute;
   right: 25%;
-  color: black;
+  color: black !important;
 }
 header .searchKeyWord form input {
   width: 60%;
@@ -180,6 +183,10 @@ header .cart-header .totalQuantity {
   background-color: #f36e36 !important;
 }
 
+.table > :not(:first-child) {
+  border-top: none;
+}
+
 @media screen and (max-width: 430px) {
   header {
     font-size: 16px !important;
@@ -199,7 +206,7 @@ header .cart-header .totalQuantity {
 }
 @media screen and (min-width: 991px) {
   .searchKeyWord {
-    margin-left: 300px;
+    margin-left: 310px;
   }
   .searchKeyWord a {
     position: absolute;
@@ -210,6 +217,11 @@ header .cart-header .totalQuantity {
   .searchKeyWord input {
     width: 250px !important;
     border-radius: 40px;
+  }
+}
+@media screen and (min-width: 1400px) {
+  .container {
+    max-width: 1140px !important;
   }
 }
 .cover, .carousel {
@@ -318,17 +330,20 @@ header .cart-header .totalQuantity {
   font-size: 18px;
   border-radius: 5px;
   height: 38px;
+  max-width: 185px;
+  margin-bottom: 24px;
 }
 .product .product__item {
   margin: 10px 0;
 }
 .product .product__item a {
-  font-size: 16px;
+  font-size: 17px;
   color: black;
   cursor: pointer;
+  text-decoration: none;
 }
 .product .product-footer i {
-  font-size: 18px;
+  font-size: 16px;
   color: gold;
 }
 .product .product-footer p {
@@ -601,7 +616,9 @@ header .cart-header .totalQuantity {
   .product .dropdownSelect {
     font-size: 14px;
     border-radius: 4px;
-    height: 30px;
+    height: 32px;
+    max-width: 160px;
+    margin-bottom: 20px;
   }
   .product .card {
     border-radius: 10px;
@@ -665,6 +682,11 @@ header .cart-header .totalQuantity {
     padding-right: 3px !important;
     padding-left: 3px !important;
     max-width: 48% !important;
+  }
+}
+@media screen and (max-width: 430px) {
+  #productInformation .product-info > .product__detail {
+    padding-left: 0 !important;
   }
 }
 /* CONTACT US */
@@ -1442,6 +1464,9 @@ footer .footer__link .href2 a:hover {
   margin: 1rem;
   border: none;
 }
+.modal-dialog .modal-content .modal-body .table {
+  border-top: none !important;
+}
 .modal-dialog .modal-content .modal-body .table thead {
   background-color: #121212;
 }
@@ -1454,7 +1479,8 @@ footer .footer__link .href2 a:hover {
 .modal-dialog .modal-content .modal-body .table tbody tr td {
   color: white;
 }
-.modal-dialog .modal-content .modal-body .table tbody tr .increase, .modal-dialog .modal-content .modal-body .table tbody tr .decrease {
+.modal-dialog .modal-content .modal-body .table tbody tr .increase,
+.modal-dialog .modal-content .modal-body .table tbody tr .decrease {
   background-color: gold;
 }
 .modal-dialog .modal-content .modal-footer {
@@ -1464,6 +1490,59 @@ footer .footer__link .href2 a:hover {
   color: white;
 }
 
+#offcanvasRight #orderList .productCartName {
+  font-size: 20px;
+  font-weight: 550;
+}
+#offcanvasRight #orderList .productCartPrice {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f57224;
+}
+#offcanvasRight #orderList .deleteButton {
+  font-size: 18px;
+}
+#offcanvasRight #totalPayment {
+  font-size: 18px;
+  font-weight: 600;
+  color: #f57224;
+}
+#offcanvasRight #pay {
+  width: 250px;
+  margin-top: 30px;
+}
+#offcanvasRight #delete {
+  width: 250px;
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 430px) {
+  #offcanvasRight {
+    width: 88%;
+  }
+  #offcanvasRight #orderList .productCartName {
+    font-size: 18px;
+    font-weight: 550;
+  }
+  #offcanvasRight #orderList .productCartPrice {
+    padding: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #f57224;
+  }
+  #offcanvasRight #orderList .quantityGroup {
+    padding: 6px;
+  }
+  #offcanvasRight #orderList .quantityGroup > .decrease, #offcanvasRight #orderList .quantityGroup > .increase {
+    padding: 0.2rem 0.4rem !important;
+  }
+  #offcanvasRight #orderList #numberCart {
+    font-size: 15px;
+  }
+  #offcanvasRight #orderList .deleteButton {
+    font-size: 18px;
+  }
+}
 button.cart {
   position: relative;
   width: 40px;
