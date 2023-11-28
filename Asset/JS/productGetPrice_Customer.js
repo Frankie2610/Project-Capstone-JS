@@ -12,7 +12,8 @@ const URL7 = "https://6426b4b4556bad2a5b55dbf6.mockapi.io/feedback";
 const getProducts = async () => {
   // debugger;
   try {
-    const { data: productList } = await apiGetProducts();
+    const { data } = await apiGetProducts();
+    productList = data;
     renderProductsCustomer(productList);
     return productList;
   } catch (error) {
@@ -20,7 +21,7 @@ const getProducts = async () => {
     return null;
   }
 };
-let productList = getProducts(); //Mảng sản phẩm của cửa hàng;
+getProducts(); //Mảng sản phẩm của cửa hàng;
 
 // =======================API============================
 
