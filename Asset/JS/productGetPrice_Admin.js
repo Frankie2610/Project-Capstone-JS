@@ -74,7 +74,7 @@ async function getProducts() {
             Math.round(
               (productList[i].weight * arrayPriceUnit[1] +
                 productList[i].manufactureFee) /
-                u
+              u
             ) * u;
           puoductList[i].priceDateTime = priceDateTimeSJC;
         } else if (
@@ -85,7 +85,7 @@ async function getProducts() {
             Math.round(
               (productList[i].weight * arrayPriceUnit[3] +
                 productList[i].manufactureFee) /
-                u
+              u
             ) * u;
           productList[i].priceDateTime = priceDateTime24k;
         } else if (productList[i].goldPurity === "750") {
@@ -93,7 +93,7 @@ async function getProducts() {
             Math.round(
               (productList[i].weight * arrayPriceUnit[5] +
                 productList[i].manufactureFee) /
-                u
+              u
             ) * u;
           productList[i].priceDateTime = priceDateTime18k;
         } else if (productList[i].goldPurity === "680") {
@@ -101,7 +101,7 @@ async function getProducts() {
             Math.round(
               (productList[i].weight * arrayPriceUnit[7] +
                 productList[i].manufactureFee) /
-                u
+              u
             ) * u;
           productList[i].priceDateTime = priceDateTime16k;
         } else if (productList[i].goldPurity === "610") {
@@ -109,7 +109,7 @@ async function getProducts() {
             Math.round(
               (productList[i].weight * arrayPriceUnit[9] +
                 productList[i].manufactureFee) /
-                u
+              u
             ) * u;
           productList[i].priceDateTime = priceDateTime14k;
         }

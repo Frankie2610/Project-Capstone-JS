@@ -126,8 +126,8 @@ async function getProducts() {
         price.dateTime
       );
     });
-    priceSJC = pricesList[0].sellingPrice / 3.75; //Giá Vàng SJC trên 1 gram
-    price999 = pricesList[1].sellingPrice / 3.75; //Giá Vàng SJC trên 1 gram
+    priceSJC = pricesList[0].sellingPrice / 375; //Giá Vàng SJC trên 1 gram
+    price999 = pricesList[1].sellingPrice / 375; //Giá Vàng SJC trên 1 gram
     arrayPriceUnit.push(priceSJC, price999);
 
     let products = await apiGetProducts();

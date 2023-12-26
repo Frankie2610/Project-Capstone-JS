@@ -164,8 +164,8 @@ function renderProducts(products) {
         <td class="text-center">${product.goldPurity}</td>
         <td class="text-center">${product.weight}</td>
         <td class="text-center">${new Intl.NumberFormat("vn-VN").format(
-          product.manufactureFee
-        )}</td>
+        product.manufactureFee
+      )}</td>
         <td class="price${product.id} text-center">${new Intl.NumberFormat(
         "vn-VN"
       ).format(product.price)}</td>
