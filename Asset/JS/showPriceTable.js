@@ -30,7 +30,7 @@ async function showPrice() {
     getElement("#priceBuyingSJC").innerHTML = pricesList[0].buyingPrice.toLocaleString();
     getElement("#priceSellingSJC").innerHTML = pricesList[0].sellingPrice.toLocaleString();
     getElement("#sellChangePercentSJC").innerHTML =
-      pricesList[1].sellChangePercent.toFixed(2) + "%";
+      pricesList[0].sellChangePercent.toFixed(2) + "%";
 
     getElement("#priceBuying24k").innerHTML = pricesList[1].buyingPrice.toLocaleString();
     getElement("#priceSelling24k").innerHTML = pricesList[1].sellingPrice.toLocaleString();
