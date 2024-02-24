@@ -25,7 +25,7 @@ async function showPrice() {
       globalGoldPriceList[0].sellingPrice;
 
     //DOM thời gian cập nhật giá vàng
-    getElement("#dateTime").innerHTML = pricesList[1].dateTime;
+    getElement("#dateTime").innerHTML = pricesList[0].dateTime;
 
     getElement("#priceBuyingSJC").innerHTML = pricesList[0].buyingPrice.toLocaleString();
     getElement("#priceSellingSJC").innerHTML = pricesList[0].sellingPrice.toLocaleString();
