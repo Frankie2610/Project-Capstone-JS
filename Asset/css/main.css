@@ -132,6 +132,14 @@ html, body {
   justify-content: space-between;
 }
 
+#Loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
 header {
   position: fixed;
   width: 100%;

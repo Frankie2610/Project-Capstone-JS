@@ -1,6 +1,6 @@
 //* Khi lỗi cartArray not defined thì khai báo let cartArray = [] lại ở hàm addToCart(productId)
-showPrice();
 let cartArray = getProductsInCart(); //Mảng các sản phẩm giỏ hàng
+handleShowPrice()
 renderTable(cartArray); //re-render table cart khi refresh lại trang
 let productCart;
 let pricesList;
@@ -393,6 +393,27 @@ function renderFeedbackCustomer(customerData) {
     );
   }, "");
   document.getElementById("feedback").innerHTML = html;
+}
+
+//hàm xóa Loading
+function hideLoading() {
+  getElement("#test").classList.remove("d-none")
+  getElement("#test").classList.add("d-block")
+  getElement("#Loading").classList.add("d-none")
+}
+
+//hàm chờ loading
+function showLoading() {
+  getElement("#test").classList.remove("d-block")
+  getElement("#test").classList.add("d-none")
+  getElement("#Loading").classList.remove("d-none")
+}
+
+//hàm handleShowPrice 
+async function handleShowPrice() {
+  showLoading();
+  await showPrice();
+  hideLoading();
 }
 
 // =================Local Storage======================
