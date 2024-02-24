@@ -311,6 +311,10 @@ header .cart-header .totalQuantity {
     font-size: 30px;
   }
 }
+.slick-track {
+  width: 3822px !important;
+}
+
 .product {
   font-weight: 600;
   font-size: 20px !important;
