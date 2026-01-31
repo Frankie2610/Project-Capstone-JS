@@ -4,7 +4,7 @@ URL1 = "https://63f47a4c55677ef68bbcc8ea.mockapi.io/products"; //Product của H
 URL2 = "https://www.mihong.vn/api/v1/gold/prices/current"; //Api Mi Hồng
 URL3 = "https://6426b4b4556bad2a5b55dbf6.mockapi.io/mihongPrice"; //MockApi copy Mihong
 
-getProducts();
+// getProducts();
 // getPrice();
 // updatePriceProduct();
 

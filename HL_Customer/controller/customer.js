@@ -39,10 +39,8 @@ function renderProductsCustomer(products) {
     return (
       result +
       `
-      <div id="${
-        product.id
-      }" class="product__item col-6 col-md-4 mt-3 d-inline-flex ${
-        product.goldPurity
+      <div id="${product.id
+      }" class="product__item col-6 col-md-4 mt-3 d-inline-flex ${product.goldPurity
       }">
         <div class="card">
           <img
@@ -67,22 +65,20 @@ function renderProductsCustomer(products) {
                     Tên: <span class="nameProduct">${product.name}</span>
                   </li>
                   <li>Loại: Vàng <span>${product.goldPurity}</span></li>
-                  <li>Cân nặng: <span class="code02">${
-                    product.weight
-                  }</span> (g)</li>
+                  <li>Cân nặng: <span class="code02">${product.weight
+      }</span> (g)</li>
                   <li>
                     Giá: <span class="productPrice" id="price1">${new Intl.NumberFormat(
-                      "vn-VN"
-                    ).format(product.price)}</span> VNĐ
+        "vn-VN"
+      ).format(product.price)}</span> VNĐ
                   </li>
                   <li>Mã SP: <span class="maSP">00${product.id}</span></li>
                 </ul>
                 <a class="mb-2" href="#" onclick="checkPrice()"
                   >Click đây để xem giá</a
                 >
-                <button onclick="addToCart(${
-                  product.id
-                })" class="btn-gold-blue">
+                <button onclick="addToCart(${product.id
+      })" class="btn-gold-blue">
                   Thêm vào giỏ hàng
                 </button>
               </div>
@@ -109,13 +105,11 @@ function renderTable(cartArray) {
             <img src="${productCart.img}" with="70" height="70" />
           </td>
           <td>
-          <button type='button' class='btn decrease' onclick="decreaseQuantity(${
-            productCart.id
-          })">-</button>
+          <button type='button' class='btn decrease' onclick="decreaseQuantity(${productCart.id
+      })">-</button>
           <span id="numberCart">${productCart.quantity}</span>
-          <button type='button' class='btn increase' onclick="increaseQuantity(${
-            productCart.id
-          })">+</button>
+          <button type='button' class='btn increase' onclick="increaseQuantity(${productCart.id
+      })">+</button>
           </td>
           <td>  ${new Intl.NumberFormat("vn-VN").format(productCart.price)}</td>
           <td>${calculateCost(productCart.price, productCart.quantity)}</td>
@@ -143,16 +137,16 @@ function renderTable(cartArray) {
       <tr>
           <th class='text-end' colspan='5'>Phí Ngân Hàng</th>
           <td scope='col'>${new Intl.NumberFormat("vn-VN").format(
-            bankCharge
-          )} (VNĐ)</td>
+    bankCharge
+  )} (VNĐ)</td>
       </tr>
       <tr>
           <th class='text-end' colspan='5'>
               <i class="fa fa-arrow-right"></i> Tổng chi phí: 
           </th>
           <td scope='col'> ${new Intl.NumberFormat("vn-VN").format(
-            calculateTotalCost() + subTotal + bankCharge
-          )} (VNĐ)
+    calculateTotalCost() + subTotal + bankCharge
+  )} (VNĐ)
           </td>
       </tr>
   `;

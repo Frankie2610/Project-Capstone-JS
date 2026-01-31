@@ -1,116 +1,135 @@
-let arrayPriceUnit = []; //Mảng giá Vàng đơn vị Lượng
+import { getElement } from "./helpers.js";
+
+const URLBE = "https://hung-loi-be.vercel.app/api/gold/sjc";
+
+let priceSJC, priceSJCBuying;
+let price999, price999Buying;
+let price18k, price18kBuying;
+let price16k, price16kBuying;
+let price14k, price14kBuying;
+
+let arrayPriceUnit = [];
 
 async function showPrice() {
   try {
-    pricesList = (await apiGetPriceMiHong()).data;
-    globalGoldPriceList = (await apiGetGlobalGoldPriceMiHong()).data;
+    const res = await fetch(URLBE);
+    const data = await res.json();
+    const items = data.items || [];
+    const normalize = (str) =>
+      str
+        .toLowerCase()
+        .normalize("NFC")
+        .replace(/\s+/g, " ")
+        .trim();
 
-    arrayPriceUnit.push(
-      pricesList[0].buyingPrice,
-      pricesList[0].sellingPrice,
-      pricesList[1].buyingPrice,
-      pricesList[1].sellingPrice,
-      pricesList[5].buyingPrice,
-      pricesList[5].sellingPrice,
-      pricesList[6].buyingPrice,
-      pricesList[6].sellingPrice,
-      pricesList[7].buyingPrice,
-      pricesList[7].sellingPrice
-    );
+    const findGold = (keyword) =>
+      items.find((i) =>
+        normalize(i.TypeName).includes(normalize(keyword)) &&
+        normalize(i.BranchName) === "hồ chí minh"
+      );
 
-    //DOM Giá vàng Thế giới
-    getElement("#globalGoldBuyingPrice").innerHTML =
-      globalGoldPriceList[0].buyingPrice + "/";
-    getElement("#globalGoldSellingPrice").innerHTML =
-      globalGoldPriceList[0].sellingPrice;
+    const SJC = findGold("Vàng SJC 1L");
+    const gold24k = findGold("Nữ trang 99,99%");
+    const gold18k = findGold("75%");
+    const gold16k = findGold("68%");
+    const gold14k = findGold("61%");
 
-    //DOM thời gian cập nhật giá vàng
-    getElement("#dateTime").innerHTML = pricesList[0].dateTime;
-
-    getElement("#priceBuyingSJC").innerHTML = pricesList[0].buyingPrice.toLocaleString();
-    getElement("#priceSellingSJC").innerHTML = pricesList[0].sellingPrice.toLocaleString();
-    getElement("#sellChangePercentSJC").innerHTML =
-      pricesList[0].sellChangePercent.toFixed(2) + "%";
-
-    getElement("#priceBuying24k").innerHTML = pricesList[1].buyingPrice.toLocaleString();
-    getElement("#priceSelling24k").innerHTML = pricesList[1].sellingPrice.toLocaleString();
-    getElement("#sellChangePercent24k").innerHTML =
-      pricesList[1].sellChangePercent.toFixed(2) + "%";
-
-    getElement("#priceBuying18k").innerHTML = pricesList[5].buyingPrice.toLocaleString();
-    getElement("#priceSelling18k").innerHTML = pricesList[5].sellingPrice.toLocaleString();
-    getElement("#sellChangePercent18k").innerHTML =
-      pricesList[5].sellChangePercent.toFixed(2) + "%";
-
-    getElement("#priceBuying16k").innerHTML = pricesList[6].buyingPrice.toLocaleString();
-    getElement("#priceSelling16k").innerHTML = pricesList[6].sellingPrice.toLocaleString();
-    getElement("#sellChangePercent16k").innerHTML =
-      pricesList[6].sellChangePercent.toFixed(2) + "%";
-
-    getElement("#priceBuying14k").innerHTML = pricesList[7].buyingPrice.toLocaleString();
-    getElement("#priceSelling14k").innerHTML = pricesList[7].sellingPrice.toLocaleString();
-    getElement("#sellChangePercent14k").innerHTML =
-      pricesList[7].sellChangePercent.toFixed(2) + "%";
-
-    if (+pricesList[0].sellChangePercent >= 0) {
-      getElement("#sellChangePercentSJC").innerHTML =
-        "+" + pricesList[0].sellChangePercent.toFixed(2) + "%";
-      getElement("#sellChangePercentSJC").classList.add("text-success");
-      getElement("#sellChangePercentSJC").classList.remove("text-danger");
-    } else {
-      getElement("#sellChangePercentSJC").classList.add("text-danger");
-      getElement("#sellChangePercentSJC").classList.remove("text-success");
+    if (!SJC || !gold24k || !gold18k || !gold16k || !gold14k) {
+      console.error("Thiếu dữ liệu vàng:", {
+        gold24k,
+        gold18k,
+        gold16k,
+        gold14k
+      });
+      alert("API thiếu dữ liệu một số loại vàng");
+      return;
     }
 
-    if (+pricesList[1].sellChangePercent >= 0) {
-      getElement("#sellChangePercent24k").innerHTML =
-        "+" + pricesList[1].sellChangePercent.toFixed(2) + "%";
-      getElement("#sellChangePercent24k").classList.add("text-success");
-      getElement("#sellChangePercent24k").classList.remove("text-danger");
-    } else {
-      getElement("#sellChangePercent24k").classList.add("text-danger");
-      getElement("#sellChangePercent24k").classList.remove("text-success");
+    // ===== Giá =====
+    function formatWithThousand(value) {
+      return `${(value).toLocaleString("en-US")},000`;
+    }
+    priceSJC = formatWithThousand(SJC.Sell);
+    priceSJCBuying = formatWithThousand(SJC.Buy);
+
+    price999 = formatWithThousand(gold24k.Sell);
+    price999Buying = formatWithThousand(gold24k.Buy);
+
+    price18k = formatWithThousand(gold18k.Sell);
+    price18kBuying = formatWithThousand(gold18k.Buy);
+
+    price16k = formatWithThousand(gold16k.Sell);
+    price16kBuying = formatWithThousand(gold16k.Buy);
+
+    price14k = formatWithThousand(gold14k.Sell);
+    price14kBuying = formatWithThousand(gold14k.Buy);
+
+    function normalizeMoney(value) {
+      if (typeof value === "number") return value;
+
+      if (!value) return 0;
+
+      return Number(
+        value
+          .toString()
+          .replace(/\./g, "") // xoá dấu . ngăn nghìn
+          .replace(/,/g, "")  // xoá dấu ,
+      );
     }
 
-    if (+pricesList[5].sellChangePercent >= 0) {
-      getElement("#sellChangePercent18k").innerHTML =
-        "+" + pricesList[5].sellChangePercent.toFixed(2) + "%";
-      getElement("#sellChangePercent18k").classList.add("text-success");
-      getElement("#sellChangePercent18k").classList.remove("text-danger");
-    } else {
-      getElement("#sellChangePercent18k").classList.add("text-danger");
-      getElement("#sellChangePercent18k").classList.remove("text-success");
-    }
+    arrayPriceUnit = [
+      price999Buying,
+      price999,
+      price18kBuying,
+      price18k,
+      price16kBuying,
+      price16k,
+      price14kBuying,
+      price14k
+    ].map(normalizeMoney);
 
-    if (+pricesList[6].sellChangePercent >= 0) {
-      getElement("#sellChangePercent16k").innerHTML =
-        "+" + pricesList[6].sellChangePercent.toFixed(2) + "%";
-      getElement("#sellChangePercent16k").classList.add("text-success");
-      getElement("#sellChangePercent16k").classList.remove("text-danger");
-    } else {
-      getElement("#sellChangePercent16k").classList.add("text-danger");
-      getElement("#sellChangePercent16k").classList.remove("text-success");
-    }
+    // ===== DOM =====
+    getElement("#priceBuyingSJC").innerHTML =
+      price999Buying.toLocaleString();
+    getElement("#priceSellingSJC").innerHTML =
+      price999.toLocaleString();
 
-    if (+pricesList[7].sellChangePercent >= 0) {
-      getElement("#sellChangePercent14k").innerHTML =
-        "+" + pricesList[7].sellChangePercent.toFixed(2) + "%";
-      getElement("#sellChangePercent14k").classList.add("text-success");
-      getElement("#sellChangePercent14k").classList.remove("text-danger");
-    } else {
-      getElement("#sellChangePercent14k").classList.add("text-danger");
-      getElement("#sellChangePercent14k").classList.remove("text-success");
-    }
+    getElement("#priceBuying24k").innerHTML =
+      price999Buying.toLocaleString();
+    getElement("#priceSelling24k").innerHTML =
+      price999.toLocaleString();
+
+    getElement("#priceBuying18k").innerHTML =
+      price18kBuying.toLocaleString();
+    getElement("#priceSelling18k").innerHTML =
+      price18k.toLocaleString();
+
+    getElement("#priceBuying16k").innerHTML =
+      price16kBuying.toLocaleString();
+    getElement("#priceSelling16k").innerHTML =
+      price16k.toLocaleString();
+
+    getElement("#priceBuying14k").innerHTML =
+      price14kBuying.toLocaleString();
+    getElement("#priceSelling14k").innerHTML =
+      price14k.toLocaleString();
+
+    ["SJC", "24k", "18k", "16k", "14k"].forEach(k => {
+      const el = getElement(`#sellChangePercent${k}`);
+      el.innerHTML = "0.00%";
+      el.classList.add("text-success");
+    });
+
+    getElement("#dateTime").innerHTML = data.updatedAt;
+
   } catch (error) {
-    alert("Lấy dữ liệu giá API thất bại");
+    console.error(error);
+    alert("Lỗi khi lấy dữ liệu giá vàng");
   }
 }
 
-// ========== Get Data giá Vàng Thế giới ================
-//Lấy dữ liệu Giá vàng TG từ API copy của Mi Hồng về
-function apiGetGlobalGoldPriceMiHong() {
-  return axios({
-    method: "GET",
-    url: "https://63f47a4c55677ef68bbcc8ea.mockapi.io/globalGoldPrice",
-  });
-}
+
+export {
+  showPrice,
+  arrayPriceUnit
+};

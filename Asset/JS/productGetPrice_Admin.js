@@ -1,19 +1,27 @@
 // File Tính giá sản phẩm HL theo khối lượng và Update lại giá lên API
 
+// import { getElement } from "./helpers.js";
+import { renderProducts } from "./renderProducts.js";
+import { arrayPriceUnit, showPrice } from "./showPriceTable.js";
+const URL1 = "https://63f47a4c55677ef68bbcc8ea.mockapi.io/products"; //Product của Hưng Lợi
+
+// const URL2 = "https://www.mihong.vn/api/v1/gold/prices/current"; //Api Mi Hồng
+
 //API Copy giá Vàng MiHong (Giá trong nước và TG)
-const URL3 = "https://6426b4b4556bad2a5b55dbf6.mockapi.io/mihongPrice";
+// const URL3 = "https://6426b4b4556bad2a5b55dbf6.mockapi.io/mihongPrice";
 
 //API Giá vàng Thế giới MiHong
 const URL6 = "https://www.mihong.vn/api/v1/gold/prices/world/current";
 
 //API Copy Giá vàng Thế giới MiHong
 const URL8 = "https://63f47a4c55677ef68bbcc8ea.mockapi.io/globalGoldPrice";
+const URLBE = "https://hung-loi-be.vercel.app/api/gold/sjc"
 getGlobalGoldPrice();
 getProducts(); //Hiển thị ra list sản phẩm của Hưng Lợi ở trang quản trị
 
 let pricesList = []; //Mảng bản sao của price Mi Hồng
 let globalGoldPriceList = []; //Mảng bản sao giá vàng TG
-let productList = []; //Mảng sản phẩm của cửa hàng
+let productList; //Mảng sản phẩm của cửa hàng
 
 let priceDateTimeSJC;
 let priceDateTime24k;
@@ -22,132 +30,123 @@ let priceDateTime16k;
 let priceDateTime14k;
 
 let priceDateTime;
-// let arrayPriceUnit = []; //Mảng giá Vàng đơn vị Lượng
+
+let input24k; //input nhập gap24k
+
+window.handleUpdateGapGold = async () => {
+  input24k = prompt("gap24k: ");
+  await adjustGap24k();
+  // await getProducts();
+  location.reload() //refresh lại trang web
+};
+
+// hàm nhập lại gap24k
+window.adjustGap24k = async () => {
+  if (input24k) {
+    const payload = {
+      gap24k: +input24k,
+    };
+    try {
+      const { data } = await apiUpdateGap24k(payload, 1);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
+
+function toNumber(value) {
+  if (typeof value === "number") return value;
+  if (!value) return 0;
+
+  return Number(
+    value
+      .toString()
+      .replace(/\./g, "")
+      .replace(/,/g, "")
+  );
+}
+
 //Hàm tính toán giá vàng (trên Đơn vị: gram) của từng sản phẩm của cửa tiệm và update lại giá sau khi tính toán lên lại lên API của cửa hàng
 async function getProducts() {
   try {
-    pricesList = (await apiGetPrice()).data.data;
-    //Tạo các đối tượng constructor để thêm thuộc tính ID, vì các obj của Mi Hồng ko có thuộc tính ID
-    // pricesList = prices.map((price) => {
-    //   return new Price(
-    //     price.buyingPrice,
-    //     price.sellingPrice,
-    //     price.code,
-    //     price.sellChange,
-    //     price.sellChangePercent,
-    //     price.buyChange,
-    //     price.buyChangePercent,
-    //     price.dateTime,
-    //     price.id
-    //   );
-    // });
+    await showPrice(); // đảm bảo arrayPriceUnit đã có
 
-    //Tạo ID cho API của tiệm vì API Mi Hồng không có ID
-    for (i = 0; i < pricesList.length; i++) {
-      pricesList[i] = { ...pricesList[i], id: i + 1 };
-      let price = pricesList[i];
-      let priceId = pricesList[i].id;
-      await apiUpdatePriceMiHong(price, priceId);
-    }
+    const u = 10000; // hệ số làm tròn
+    const { data } = await apiGetProducts();
+    productList = data;
 
-    //Lấy thời gian cập nhật theo tuổi Vàng
-    priceDateTimeSJC = pricesList[0].dateTime;
-    priceDateTime24k = pricesList[1].dateTime;
-    priceDateTime18k = pricesList[5].dateTime;
-    priceDateTime16k = pricesList[6].dateTime;
-    priceDateTime14k = pricesList[7].dateTime;
-
-    await showPrice();
-    const u = 10000; //Hệ số làm tròn giá sản phẩm cửa hàng
-    productList = (await apiGetProducts()).data;
     for (let i = 0; i < productList.length; i++) {
-      product = productList[i]; //Định nghĩa product cho hàm Update lại giá
-      productId = productList[i].id; //Định nghĩa productId cho hàm Update lại giá
+      const product = productList[i];
+      const productId = product.id;
 
-      // TH1: Nếu weight = 0, nghĩa là chọn nhập giá tiền bằng tay
-      if (!productList[i].weight) {
-        console.log(productList[i].weight);
-      } //TH2: Nếu weight = true, nghĩa là chọn nhập cân nặng để chương trình tự tính toán giá tiền
-      else {
-        if (productList[i].goldPurity === "SJC") {
-          productList[i].price =
-            Math.round(
-              (productList[i].weight * arrayPriceUnit[1] +
-                productList[i].manufactureFee) /
-              u
-            ) * u;
-          puoductList[i].priceDateTime = priceDateTimeSJC;
-        } else if (
-          productList[i].goldPurity === "999" ||
-          productList[i].goldPurity === "24k-ThầnTài"
-        ) {
-          productList[i].price =
-            Math.round(
-              (productList[i].weight * arrayPriceUnit[3] +
-                productList[i].manufactureFee) /
-              u
-            ) * u;
-          productList[i].priceDateTime = priceDateTime24k;
-        } else if (productList[i].goldPurity === "750") {
-          productList[i].price =
-            Math.round(
-              (productList[i].weight * arrayPriceUnit[5] +
-                productList[i].manufactureFee) /
-              u
-            ) * u;
-          productList[i].priceDateTime = priceDateTime18k;
-        } else if (productList[i].goldPurity === "680") {
-          productList[i].price =
-            Math.round(
-              (productList[i].weight * arrayPriceUnit[7] +
-                productList[i].manufactureFee) /
-              u
-            ) * u;
-          productList[i].priceDateTime = priceDateTime16k;
-        } else if (productList[i].goldPurity === "610") {
-          productList[i].price =
-            Math.round(
-              (productList[i].weight * arrayPriceUnit[9] +
-                productList[i].manufactureFee) /
-              u
-            ) * u;
-          productList[i].priceDateTime = priceDateTime14k;
-        }
-        await apiUpdatePriceProduct(product, productId);
+      // Nếu không nhập weight → bỏ qua
+      if (!product.weight) continue;
+
+      const weight = toNumber(product.weight);
+      const fee = toNumber(product.manufactureFee);
+
+      let unitPrice = 0;
+      let priceDateTime = "";
+
+      switch (product.goldPurity) {
+        case "SJC":
+          unitPrice = toNumber(arrayPriceUnit[1]);
+          priceDateTime = priceDateTimeSJC;
+          break;
+
+        case "999":
+        case "24k-ThầnTài":
+          unitPrice = toNumber(arrayPriceUnit[1]);
+          priceDateTime = priceDateTime24k;
+          break;
+
+        case "750":
+          unitPrice = toNumber(arrayPriceUnit[3]);
+          priceDateTime = priceDateTime18k;
+          break;
+
+        case "680":
+          unitPrice = toNumber(arrayPriceUnit[5]);
+          priceDateTime = priceDateTime16k;
+          break;
+
+        case "610":
+          unitPrice = toNumber(arrayPriceUnit[7]);
+          priceDateTime = priceDateTime14k;
+          break;
+
+        default:
+          continue;
       }
+
+      const rawPrice = weight * unitPrice + fee;
+
+      product.price = Math.round(rawPrice) / 1000;
+      product.priceDateTime = priceDateTime;
+
+      await apiUpdatePriceProduct(product, productId);
     }
+
     renderProducts(productList);
   } catch (error) {
+    console.error(error);
     alert("Lấy dữ liệu sản phẩm thất bại");
   }
 }
+
 
 //Hàm lấy data giá Vàng Thế giới từ API Mi Hồng và copy về API của cửa hàng
 // const getGlobalGoldPrice = async () => {
 async function getGlobalGoldPrice() {
   try {
     let globalGoldPriceList = (await apiGetGlobalPrice()).data.data;
-    // globalGoldPriceList = globalGoldPriceList.map((price) => {
-    //   return new GlobalGoldPrice(
-    //     price.buyingPrice,
-    //     price.sellingPrice,
-    //     price.buyChange,
-    //     price.sellChange,
-    //     price.code,
-    //     price.name,
-    //     price.importNumber,
-    //     price.dateTime,
-    //     price.changed,
-    //     price.id
-    //   );
-    // });
-
     //Tạo id
-    for (i = 0; i < globalGoldPriceList.length; i++) {
-      globalGoldPriceList[i] = { ...globalGoldPriceList[i], id: i + 1 };
-      let globalPrice = globalGoldPriceList[i];
-      let globalPriceId = globalGoldPriceList[i].id;
-      await apiUpdateGlobalPrice(globalPrice, globalPriceId);
+    if (productList) {
+      for (i = 0; i < globalGoldPriceList.length; i++) {
+        globalGoldPriceList[i] = { ...globalGoldPriceList[i], id: i + 1 };
+        let globalPrice = globalGoldPriceList[i];
+        await apiUpdateGlobalPrice(globalPrice, globalPriceId);
+      }
     }
   } catch (error) {
     alert(error.message);
@@ -160,7 +159,7 @@ async function getGlobalGoldPrice() {
 function apiGetPrice() {
   return axios({
     method: "GET",
-    url: URL2,
+    url: URLBE,
   });
 }
 
@@ -223,4 +222,22 @@ function apiGetGlobalGoldPriceMiHong() {
     method: "GET",
     url: URL8,
   });
+}
+// const apiGetGap24k = async () => {
+//   const { data } = await axios.get(URL9);
+//   return data;
+// };
+
+//Update gap24k
+function apiUpdateGap24k(gapGold, gapGoldId) {
+  return axios({
+    method: "PUT",
+    url: `${URL9}/${gapGoldId}`,
+    data: gapGold,
+  });
+}
+
+export {
+  productList,
+  getProducts
 }

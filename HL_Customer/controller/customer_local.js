@@ -1,32 +1,28 @@
-//* Khi lỗi cartArray not defined thì khai báo let cartArray = [] lại ở hàm addToCart(productId)
-let cartArray = getProductsInCart(); //Mảng các sản phẩm giỏ hàng
-handleShowPrice()
-renderTable(cartArray); //re-render table cart khi refresh lại trang
-let productCart;
-let pricesList;
-
-let customerData = []; //Khai báo mảng thông tin feedback của KH
-getFeedback(); //lấy dữ liệu feedback
+import { getElement } from "../../Asset/JS/helpers.js";
+import { apiSendInformation, getProducts, productList } from "../../Asset/JS/productGetPrice_Customer.js";
+import { renderProductsCustomer } from "../../Asset/JS/renderProducts.js";
+import { showPrice } from "../../Asset/JS/showPriceTable.js"
+const URL7 = "https://6426b4b4556bad2a5b55dbf6.mockapi.io/feedback";
 
 //Hàm đóng/mở modal navbar
-function openModalNavBar() {
+window.openModalNavBar = function () {
   getElement("#goldNavbar").classList.toggle("show");
   getElement(".fa-x").classList.toggle("d-none");
   getElement(".fa-bars").classList.toggle("d-none");
 }
 
-function support() {
+window.support = function () {
   // document.getElementById("list-support").classList.remove("d-none");
   document.getElementById("list-support").style.display = "block";
 }
 
-function closeContact() {
+window.closeContact = function () {
   // document.getElementById("list-support").classList.add("d-none");
   document.getElementById("list-support").style.display = "none";
 }
 
 //Hàm hiển thị sản phẩm Vàng (trong dropdown) theo lựa chọn Khách hàng
-function chooseProducts() {
+window.chooseProducts = function () {
   let productType = +document.getElementById("productType").value;
   let arraySJC = []; //Mảng Vàng miếng SJC
   let array999 = []; //Mảng Vàng nhẫn 24k
@@ -85,62 +81,231 @@ function chooseProducts() {
   }
 }
 
-//Hàm hiển thị sản phẩm Vàng ra giao diện
-function renderProductsCustomer(products) {
-  let html = products.reduce((result, product, index) => {
+//Hàm thanh toán Đơn hàng
+window.orderPayment = function () {
+  if (!cartArray.length) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Your cart is empty!",
+    });
+  } else {
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Your order is done !",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    cartArray = [];
+    storeProductsInCart();
+  }
+}
+
+//Hàm Reset toàn bộ giỏ hàng
+window.resetCart = function () {
+  cartArray = [];
+  renderTable(cartArray);
+  localStorage.clear();
+  Swal.fire({
+    position: "top-end",
+    icon: "success",
+    title: "Bạn đã xóa giỏ hàng",
+    showConfirmButton: false,
+    timer: 1500,
+  });
+}
+
+//Hàm tính Tổng số sản phẩm trong giỏ hàng
+window.calculateTotalQuantity = function () {
+  let totalQuantity = 0;
+  for (let i = 0; i < cartArray.length; i++) {
+    totalQuantity += +cartArray[i].quantity
+  }
+  return totalQuantity;
+}
+
+//Hàm tính chi phí tổng tiền theo sản phẩm
+window.calculateCost = function (productCartPrice, productCartQuantity) {
+  let totalCostProduct =
+    productCartPrice * productCartQuantity
+    ;
+  return totalCostProduct.toLocaleString();
+}
+
+//Hàm tính tổng tiền của Đơn hàng
+window.calculateTotalCost = function () {
+  let totalOrderExpense = 0;
+  for (let i = 0; i < cartArray.length; i++) {
+    totalOrderExpense += cartArray[i].price * cartArray[i].quantity;
+  }
+  return totalOrderExpense.toLocaleString();
+}
+
+//Hàm xóa sản phẩm trong giỏ hàng theo Id
+window.deleteProduct = function (productCartId) {
+  let index = cartArray.findIndex((productCart) => {
+    return productCart.id == productCartId;
+  });
+  cartArray.splice(index, 1);
+  storeProductsInCart();
+}
+
+//Hàm button tăng số lượng sản phẩm trong giỏ hàng
+window.increaseQuantity = function (productCartId) {
+  let index = cartArray.findIndex((productCart) => {
+    return productCart.id == productCartId;
+  });
+  cartArray[index].quantity = +cartArray[index].quantity + 1;
+  storeProductsInCart();
+}
+
+//Hàm button giảm số lượng sản phẩm trong giỏ hàng
+window.decreaseQuantity = function (productCartId) {
+  let index = cartArray.findIndex((productCart) => {
+    return productCart.id == productCartId;
+  });
+  cartArray[index].quantity = +cartArray[index].quantity - 1;
+
+  //Hàm xóa sản phẩm ra khỏi mảng nếu số lượng bị giảm về 0
+  for (let i = 0; i < cartArray.length; i++) {
+    if (cartArray[i].quantity === 0) {
+      cartArray.splice(i, 1);
+    }
+  }
+
+  // renderTable(cartArray);
+  storeProductsInCart();
+}
+
+//productList: Mảng chứa sản phẩm của cửa hàng
+window.addToCart = function (productId) {
+  // let cartArray;  Set lại dòng này, rồi refresh lại trang web rồi xóa đi.
+  // //productList đang là 1 Promise, nên phải đưa nó vào hàm then () để xử lý giá trị tiếp
+  let count = 0;
+  let index = productList.findIndex((product) => {
+    return product.id == productId;
+  });
+  let productCart = productList[index]; //Sp muốn thêm vào giỏ
+  for (let i = 0; i < cartArray.length; i++) {
+    if (productCart.id === cartArray[i].id) {
+      // getProductCart();
+      cartArray[i].quantity = +cartArray[i].quantity + 1;
+      count++;
+      break;
+    }
+  }
+  if (!count) {
+    cartArray.push(productCart);
+    productCart.quantity = 1;
+  }
+  // renderTable(cartArray);
+  storeProductsInCart();
+}
+
+window.openModal = () => {
+  getElement("#cartModal").style.display = "block";
+}
+window.closeModal = () => {
+  getElement("#cartModal").style.display = "none";
+}
+
+//Hàm lấy phản hồi khách hàng
+getElement("#sendFeedback").addEventListener("click", async (evt) => {
+  try {
+    evt.preventDefault();
+    if (checkValid) {
+      let time = new Date();
+      let date = time.getDate();
+      let month = time.getMonth() + 1;
+      let year = time.getFullYear();
+      let hour = time.getHours();
+      let minute = time.getMinutes();
+      let second = time.getSeconds();
+
+      const info = {
+        name: getElement("#nameCustomer").value,
+        email: getElement("#emailCustomer").value,
+        phone: getElement("#phoneNumber").value,
+        feedback: getElement("#feedbackCustomer").value,
+        timeComment: date + "/" + month + "/" + year + ", " + hour + ":" + minute + ":" + second
+      };
+      await apiSendInformation(info);
+      resetFeedback();
+      alert("👉Cám ơn bạn đã góp ý. Hưng Lợi sẽ liên lạc lại bạn sớm nhất 🥰🤗");
+      getFeedback();
+    }
+  } catch {
+    alert("Gửi phản hồi thất bại");
+  }
+});
+
+//Hàm reset phản hồi customer
+window.resetFeedback = function () {
+  getElement("#nameCustomer").value = "";
+  getElement("#emailCustomer").value = "";
+  getElement("#phoneNumber").value = "";
+  getElement("#feedbackCustomer").value = "";
+}
+
+window.getFeedback = async function () {
+  try {
+    const { data: customerData } = await axios.get(URL7);
+    renderFeedbackCustomer(customerData);
+  } catch (error) {
+    alert("Lấy dữ liệu phản hồi Khách hàng thất bại");
+  }
+}
+
+// const initAvatar = (fullName: string) => {
+//   const name = fullName.split(' ');
+//   // console.log(initAvatar);
+//   // lấy chữ cái đầu của họ ghép với chữ cái đầu của tên => tạo avatar
+//   const newAvatar = name[0][0] + name[name.length - 1][0];
+//   return `https://ui-avatars.com/api/?name=${newAvatar}&background=random&size=100`;
+// };
+
+// export { initAvatar };
+
+//Dùng hàm reduce
+window.renderFeedbackCustomer = function (customerData) {
+  customerData = customerData.reverse();
+  getElement("#feedbackCount").innerHTML = +customerData.length;
+  let html = customerData.reduce((result, customer, index) => {
+    const name = customer.name.split(" ")
+    let newAvatar;
+    if (name.length === 1) {
+      newAvatar = name[0][0];
+    } else {
+      newAvatar = name[0][0] + name[name.length - 1][0];
+    }
     return (
       result +
       `
-      <div 
-      id="${product.id}" 
-      class="product__item col-6 col-md-4 d-inline-flex ${product.goldPurity}"
-      >
-        <div class="card">
-          <img
-            class="imgProduct"
-            src="${product.img}"
-            alt="${product.name}"
-          />
-          <a class="text-center mt-3">${product.name}</a>
-          <div class="product-footer d-flex justify-content-between">
-            <a class="d-flex ms-3 mb-3 align-items-center">
-              <i class="fa fa-star" aria-hidden="true"></i>
-             5
-            </a>
-            <p class="me-3">68 đã bán</p>
+        <div style="padding: 15px; border-top: 1px solid #dadbdd; display: flex">
+          <img style="border-radius: 100%; max-height: 40px; width: 40px !important" src="https://ui-avatars.com/api/?name=${newAvatar}&background=198754&color=ffff&size=100"/>
+          <div>          
+          <span style="font-weight: 600; font-size: 17px; margin: 0 0 0 10px;">${customer.name}</span>
+          <p style="margin: 5px 0 5px 10px;">${customer.feedback}</p>        
+          <span style="font-size: 14px; display: block; margin-left: 10px; color:#cecece">${customer.timeComment}</span>
           </div>
-      <div
-                class="product-info flex-column justify-content-center align-items-center text-center"
-              >
-                <h2>Chi tiết</h2>
-                <ul class="product__detail">
-                  <li>
-                    Tên: <span class="nameProduct">${product.name}</span>
-                  </li>
-                  <li>Loại: Vàng <span>${product.goldPurity}</span></li>
-                  <li>Cân nặng: <span class="code02">${product.weight
-      }</span> (chỉ)</li>
-                  <li>
-                    Giá: <span class="productPrice" id="price1">${new Intl.NumberFormat(
-        "vn-VN"
-      ).format(product.price)}</span> VNĐ
-                  </li>
-                  <li>Cập nhật: <span class="maSP">${product.priceDateTime
-      }</span></li>
-                </ul>
-                <button onclick="addToCart(${product.id
-      })" class="btn-gold-blue">
-                  Thêm vào giỏ hàng
-                </button>
-              </div>
-            </div>
-          </div>
-    `
+        </div>
+      `
     );
   }, "");
-
-  document.getElementById("productInformation").innerHTML = html;
+  document.getElementById("feedback").innerHTML = html;
 }
+
+//hàm chuyển đổi trạng thái loading 
+// function switchLoading() {
+//   getElement("#test").classList.remove("d-none")
+//   getElement("#test").classList.add("d-block")
+
+//   getElement("#test").classList.remove("d-block")
+//   getElement("#test").classList.add("d-none")
+
+// }
+
 
 //Hàm hiển thị Đơn hàng ra giao diện
 function renderTable(cartArray) {
@@ -193,207 +358,6 @@ function renderTable(cartArray) {
   getElement(".totalQuantity2").innerHTML = calculateTotalQuantity()
 }
 
-//Hàm thanh toán Đơn hàng
-function orderPayment() {
-  if (!cartArray.length) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Your cart is empty!",
-    });
-  } else {
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Your order is done !",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-    cartArray = [];
-    storeProductsInCart();
-  }
-}
-
-//Hàm Reset toàn bộ giỏ hàng
-function resetCart() {
-  cartArray = [];
-  renderTable(cartArray);
-  localStorage.clear();
-  Swal.fire({
-    position: "top-end",
-    icon: "success",
-    title: "Bạn đã xóa giỏ hàng",
-    showConfirmButton: false,
-    timer: 1500,
-  });
-}
-
-//Hàm tính Tổng số sản phẩm trong giỏ hàng
-function calculateTotalQuantity() {
-  let totalQuantity = 0;
-  for (let i = 0; i < cartArray.length; i++) {
-    totalQuantity += +cartArray[i].quantity
-  }
-  return totalQuantity;
-}
-
-//Hàm tính chi phí tổng tiền theo sản phẩm
-function calculateCost(productCartPrice, productCartQuantity) {
-  let totalCostProduct =
-    productCartPrice * productCartQuantity
-    ;
-  return totalCostProduct.toLocaleString();
-}
-
-//Hàm tính tổng tiền của Đơn hàng
-function calculateTotalCost() {
-  let totalOrderExpense = 0;
-  for (let i = 0; i < cartArray.length; i++) {
-    totalOrderExpense += cartArray[i].price * cartArray[i].quantity;
-  }
-  return totalOrderExpense.toLocaleString();
-}
-
-//Hàm xóa sản phẩm trong giỏ hàng theo Id
-function deleteProduct(productCartId) {
-  let index = cartArray.findIndex((productCart) => {
-    return productCart.id == productCartId;
-  });
-  cartArray.splice(index, 1);
-  storeProductsInCart();
-}
-
-//Hàm button tăng số lượng sản phẩm trong giỏ hàng
-function increaseQuantity(productCartId) {
-  let index = cartArray.findIndex((productCart) => {
-    return productCart.id == productCartId;
-  });
-  cartArray[index].quantity = +cartArray[index].quantity + 1;
-  storeProductsInCart();
-}
-
-//Hàm button giảm số lượng sản phẩm trong giỏ hàng
-function decreaseQuantity(productCartId) {
-  let index = cartArray.findIndex((productCart) => {
-    return productCart.id == productCartId;
-  });
-  cartArray[index].quantity = +cartArray[index].quantity - 1;
-
-  //Hàm xóa sản phẩm ra khỏi mảng nếu số lượng bị giảm về 0
-  for (let i = 0; i < cartArray.length; i++) {
-    if (cartArray[i].quantity === 0) {
-      cartArray.splice(i, 1);
-    }
-  }
-
-  // renderTable(cartArray);
-  storeProductsInCart();
-}
-
-//productList: Mảng chứa sản phẩm của cửa hàng
-function addToCart(productId) {
-  // let cartArray;  Set lại dòng này, rồi refresh lại trang web rồi xóa đi.
-  // //productList đang là 1 Promise, nên phải đưa nó vào hàm then () để xử lý giá trị tiếp
-  let count = 0;
-  let index = productList.findIndex((product) => {
-    return product.id == productId;
-  });
-  let productCart = productList[index]; //Sp muốn thêm vào giỏ
-  for (let i = 0; i < cartArray.length; i++) {
-    if (productCart.id === cartArray[i].id) {
-      // getProductCart();
-      cartArray[i].quantity = +cartArray[i].quantity + 1;
-      count++;
-      break;
-    }
-  }
-  if (!count) {
-    cartArray.push(productCart);
-    productCart.quantity = 1;
-  }
-  // renderTable(cartArray);
-  storeProductsInCart();
-}
-
-function openModal() {
-  getElement("#cartModal").style.display = "block";
-}
-
-function closeModal() {
-  getElement("#cartModal").style.display = "none";
-}
-
-//Hàm lấy phản hồi khách hàng
-getElement("#sendFeedback").addEventListener("click", async (evt) => {
-  try {
-    console.log(checkValid);
-    evt.preventDefault();
-    if (checkValid) {
-      let time = new Date();
-      let date = time.getDate();
-      let month = time.getMonth() + 1;
-      let year = time.getFullYear();
-      let hour = time.getHours();
-      let minute = time.getMinutes();
-      let second = time.getSeconds();
-
-      const info = {
-        name: getElement("#nameCustomer").value,
-        email: getElement("#emailCustomer").value,
-        phone: getElement("#phoneNumber").value,
-        feedback: getElement("#feedbackCustomer").value,
-        timeComment: date + "/" + month + "/" + year + ", " + hour + ":" + minute + ":" + second
-      };
-      await apiSendInformation(info);
-      resetFeedback();
-      alert("👉Cám ơn bạn đã góp ý. Hưng Lợi sẽ liên lạc lại bạn sớm nhất 🥰🤗");
-      getFeedback();
-    }
-  } catch {
-    alert("Gửi phản hồi thất bại");
-  }
-});
-
-//Hàm reset phản hồi customer
-function resetFeedback() {
-  getElement("#nameCustomer").value = "";
-  getElement("#emailCustomer").value = "";
-  getElement("#phoneNumber").value = "";
-  getElement("#feedbackCustomer").value = "";
-}
-
-async function getFeedback() {
-  try {
-    const { data: customerData } = await axios.get(URL7);
-    renderFeedbackCustomer(customerData);
-  } catch (error) {
-    alert("Lấy dữ liệu phản hồi Khách hàng thất bại");
-  }
-}
-
-//Dùng hàm reduce
-function renderFeedbackCustomer(customerData) {
-  customerData = customerData.reverse();
-  getElement("#feedbackCount").innerHTML = +customerData.length;
-  let html = customerData.reduce((result, customer, index) => {
-    return (
-      result +
-      `
-        <div style="padding: 15px; border-top: 1px solid #dadbdd; display: flex">
-          <button style="border-radius: 100%; cursor: initial; max-height: 40px; width: 40px !important" class="btn btn-success">
-            <span>${customer.name.charAt(0).toUpperCase()}</span>
-          </button>
-          <div>          
-          <span style="font-weight: 600; font-size: 17px; margin: 0 0 0 10px;">${customer.name}</span>
-          <p style="margin: 5px 0 5px 10px;">${customer.feedback}</p>        
-          <span style="font-size: 14px; display: block; margin-left: 10px; color:#cecece">${customer.timeComment}</span>
-          </div>
-        </div>
-      `
-    );
-  }, "");
-  document.getElementById("feedback").innerHTML = html;
-}
 
 //hàm xóa Loading
 function hideLoading() {
@@ -434,16 +398,11 @@ function getProductsInCart() {
 }
 
 //Lưu dữ liệu giỏ hàng vào Local Storage
-function storeProductsInCart() {
+window.storeProductsInCart = function () {
   // debugger;
   const json = JSON.stringify(cartArray);
   localStorage.setItem("cartArray", json);
   renderTable(cartArray);
-}
-
-// ============ Helpers ==============
-function getElement(selector) {
-  return document.querySelector(selector);
 }
 
 // ========Component Search==========
@@ -457,7 +416,7 @@ function getElement(selector) {
 //   renderProductsCustomer(newProductList);
 // });
 
-function searchProduct() {
+window.searchProduct = function () {
   // //productList đang là 1 Promise, nên phải đưa nó vào hàm then () để xử lý giá trị tiếp
   // B1: DOM
   let search = getElement("#txtSearch").value;
@@ -480,8 +439,19 @@ function searchProduct() {
   getElement("#txtSearch").value = "";
 }
 
-const handleKeyPress = (event) => {
+window.handleKeyPress = function (event) {
   if (event.key === "Enter") {
     searchProduct()
   }
 };
+
+window.loginFacebook = function () {
+  sessionStorage.getItem('name');
+}
+
+getProducts()
+//* Khi lỗi cartArray not defined thì khai báo let cartArray = [] lại ở hàm addToCart(productId)
+let cartArray = getProductsInCart(); //Mảng các sản phẩm giỏ hàng
+handleShowPrice()
+renderTable(cartArray); //re-render table cart khi refresh lại trang
+getFeedback(); //lấy dữ liệu feedback
