@@ -121,7 +121,7 @@ async function getProducts() {
 
       const rawPrice = weight * unitPrice + fee;
 
-      product.price = Math.round(rawPrice) / 1000;
+      product.price = Math.round(rawPrice) / 10;
       product.priceDateTime = priceDateTime;
 
       await apiUpdatePriceProduct(product, productId);

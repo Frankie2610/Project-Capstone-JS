@@ -32,32 +32,33 @@ window.chooseProducts = function () {
   let arrayThanTai = []; //Mảng Vàng vỉ Thần Tài
 
   // //productList đang là 1 Promise, nên phải đưa nó vào hàm then () để xử lý giá trị tiếp
-  for (i = 0; i < productList.length; i++) {
+  for (let i = 0; i < productList.length; i++) {
     if (productList[i].goldPurity === "999") {
       array999.push(productList[i]);
     }
   }
-  for (i = 0; i < productList.length; i++) {
+  for (let i = 0; i < productList.length; i++) {
     if (productList[i].goldPurity === "750") {
       array750.push(productList[i]);
     }
   }
-  for (i = 0; i < productList.length; i++) {
+  for (let i = 0; i < productList.length; i++) {
     if (productList[i].goldPurity === "680") {
       array680.push(productList[i]);
     }
   }
-  for (i = 0; i < productList.length; i++) {
+  for (let i = 0; i < productList.length; i++) {
+    debugger;
     if (productList[i].goldPurity === "610") {
       array610.push(productList[i]);
     }
   }
-  for (i = 0; i < productList.length; i++) {
+  for (let i = 0; i < productList.length; i++) {
     if (productList[i].goldPurity === "SJC") {
       arraySJC.push(productList[i]);
     }
   }
-  for (i = 0; i < productList.length; i++) {
+  for (let i = 0; i < productList.length; i++) {
     if (productList[i].goldPurity === "24k-ThầnTài") {
       arrayThanTai.push(productList[i]);
     }

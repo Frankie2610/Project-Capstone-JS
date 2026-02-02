@@ -36,6 +36,7 @@ async function showPrice() {
 
     if (!SJC || !gold24k || !gold18k || !gold16k || !gold14k) {
       console.error("Thiếu dữ liệu vàng:", {
+        SJC,
         gold24k,
         gold18k,
         gold16k,
@@ -78,6 +79,8 @@ async function showPrice() {
     }
 
     arrayPriceUnit = [
+      priceSJCBuying,
+      priceSJC,
       price999Buying,
       price999,
       price18kBuying,
@@ -90,9 +93,9 @@ async function showPrice() {
 
     // ===== DOM =====
     getElement("#priceBuyingSJC").innerHTML =
-      price999Buying.toLocaleString();
+      priceSJCBuying.toLocaleString();
     getElement("#priceSellingSJC").innerHTML =
-      price999.toLocaleString();
+      priceSJC.toLocaleString();
 
     getElement("#priceBuying24k").innerHTML =
       price999Buying.toLocaleString();
