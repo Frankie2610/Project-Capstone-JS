@@ -15,24 +15,25 @@ async function showPrice() {
     const res = await fetch(URLBE);
     const data = await res.json();
     const items = data.items || [];
-    const normalize = (str) =>
-      str
-        .toLowerCase()
-        .normalize("NFC")
-        .replace(/\s+/g, " ")
-        .trim();
+    // const normalize = (str) =>
+    //   str
+    //     // .toLowerCase()
+    //     // .normalize("NFC")
+    //     .replace(/\s+/g, " ")
+    //     .trim();
 
     const findGold = (keyword) =>
       items.find((i) =>
-        normalize(i.TypeName).includes(normalize(keyword)) &&
-        normalize(i.BranchName) === "hồ chí minh"
+        i.code?.includes(keyword)
       );
 
-    const SJC = findGold("Vàng SJC 1L");
-    const gold24k = findGold("Nữ trang 99,99%");
-    const gold18k = findGold("75%");
-    const gold16k = findGold("68%");
-    const gold14k = findGold("61%");
+    const SJC = findGold("SJC");
+    console.log(SJC);
+
+    const gold24k = findGold("999");
+    const gold18k = findGold("750");
+    const gold16k = findGold("680");
+    const gold14k = findGold("610");
 
     if (!SJC || !gold24k || !gold18k || !gold16k || !gold14k) {
       console.error("Thiếu dữ liệu vàng:", {
@@ -48,22 +49,22 @@ async function showPrice() {
 
     // ===== Giá =====
     function formatWithThousand(value) {
-      return `${(value).toLocaleString("en-US")},000`;
+      return `${(value).toLocaleString("en-US")}`;
     }
-    priceSJC = formatWithThousand(SJC.Sell);
-    priceSJCBuying = formatWithThousand(SJC.Buy);
+    priceSJC = formatWithThousand(SJC.sellingPrice * 10);
+    priceSJCBuying = formatWithThousand(SJC.buyingPrice * 10);
 
-    price999 = formatWithThousand(gold24k.Sell);
-    price999Buying = formatWithThousand(gold24k.Buy);
+    price999 = formatWithThousand(gold24k.sellingPrice * 10);
+    price999Buying = formatWithThousand(gold24k.buyingPrice * 10);
 
-    price18k = formatWithThousand(gold18k.Sell);
-    price18kBuying = formatWithThousand(gold18k.Buy);
+    price18k = formatWithThousand(gold18k.sellingPrice * 10);
+    price18kBuying = formatWithThousand(gold18k.buyingPrice * 10);
 
-    price16k = formatWithThousand(gold16k.Sell);
-    price16kBuying = formatWithThousand(gold16k.Buy);
+    price16k = formatWithThousand(gold16k.sellingPrice * 10);
+    price16kBuying = formatWithThousand(gold16k.buyingPrice * 10);
 
-    price14k = formatWithThousand(gold14k.Sell);
-    price14kBuying = formatWithThousand(gold14k.Buy);
+    price14k = formatWithThousand(gold14k.sellingPrice * 10);
+    price14kBuying = formatWithThousand(gold14k.buyingPrice * 10);
 
     function normalizeMoney(value) {
       if (typeof value === "number") return value;
@@ -123,7 +124,7 @@ async function showPrice() {
       el.classList.add("text-success");
     });
 
-    getElement("#dateTime").innerHTML = data.updatedAt;
+    getElement("#dateTime").innerHTML = gold24k.dateTime;
 
   } catch (error) {
     console.error(error);

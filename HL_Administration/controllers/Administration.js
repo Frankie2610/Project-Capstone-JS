@@ -1,92 +1,94 @@
-// Hàm tìm kiếm sản phẩm theo tên
+import { apiGetProducts } from "../../Asset/JS/productGetPrice_Admin.js";
+// ================= Helpers =================
+function getElement(selector) {
+  return document.querySelector(selector);
+}
 
+// ================= STATE =================
+let productList = [];
+
+// ================= SEARCH =================
 function searchProduct() {
-  // B1: DOM
-  let search = getElement("#txtSearch").value;
-  // B2: Lọc những product có name khớp với giá trị search
+  let search = getElement("#txtSearch").value.toLowerCase();
+
   let newProductList = productList.filter((product) => {
-    //Lọc ra mảng mới có product khớp điều kiện
     let name = product.name.toLowerCase();
-    search = search.toLowerCase();
     return name.indexOf(search) !== -1;
   });
+
   renderProducts(newProductList);
 }
 
-//Hàm tìm kiếm tên sản phẩm thông qua sự kiện type input.
 getElement("#txtSearch").addEventListener("input", (evt) => {
   const search = evt.target.value.toLowerCase();
+
   let newProductList = productList.filter((product) => {
     let name = product.name.toLowerCase();
-    console.log(name);
     return name.indexOf(search) !== -1;
   });
+
   renderProducts(newProductList);
 });
 
-// Hàm thêm sản phẩm: DOM và gửi yêu cầu thêm sản phẩm tới API
+// ================= CREATE =================
 function createProduct() {
-  debugger;
-  // getElement("#manualOrAuto").disabled = false;
   const product = {
     name: getElement("#TenSP").value,
     price: +getElement("#GiaNhapTay").value,
     weight: getElement("#GiaSP").value,
     type: getElement("#productForm").value,
     img: getElement("#HinhSP").value,
-    // description: getElement("#MoTaSP").value,
     goldPurity: getElement("#loaiSP").value,
     codeProduct: getElement("#maSP").value,
     manufactureFee: +getElement("#TienCongSP").value,
   };
 
-  isValid = validate();
-  if (!isValid) {
-    return;
-  }
+  if (!validate()) return;
 
   apiCreateProduct(product)
-    .then((response) => {
-      //1.Ở đây gọi API getProducts, ko dùng renderProducts vì renderProducts ko có giá Vàng lấy từ Mi Hồng, trong khi hàm renderProducts có biến {product.price}
-      getProducts(productList);
+    .then(() => apiGetProducts())
+    .then((res) => {
+      productList = res.data;
+      renderProducts(productList);
       alertSuccess("Thêm sản phẩm thành công");
+      $("#myModal").modal("hide");
     })
-    .catch((error) => {
+    .catch(() => {
       alertFail("Thêm sản phẩm thất bại");
     });
-  $("#myModal").modal("hide");
 }
 
-// Hàm xoá sản phẩm
+// ================= DELETE =================
 function deleteProduct(productId) {
   apiDeleteProduct(productId)
-    .then(() => {
-      //2. Hàm xóa chỉ cần renderProducts, không cần gọi lại API, vì hàm xóa chỉ cần ID để xóa toàn bộ object
+    .then(() => apiGetProducts())
+    .then((res) => {
+      productList = res.data;
       renderProducts(productList);
-      alertSuccess("Xóa sản phẩm thành công");
+      alertSuccess("Xoá sản phẩm thành công");
     })
-    .catch((error) => {
+    .catch(() => {
       alertFail("Xoá sản phẩm thất bại");
     });
 }
 
-// Hàm lấy chi tiết 1 sản phẩm và hiển thị lên modal
+// ================= SELECT (EDIT) =================
 function selectProduct(productId) {
   resetForm();
+
   apiGetProductById(productId)
     .then((response) => {
       const product = response.data;
+
       getElement("#TenSP").value = product.name;
       getElement("#GiaNhapTay").value = product.price;
       getElement("#HinhSP").value = product.img;
       getElement("#GiaSP").value = product.weight;
       getElement("#productForm").value = product.type;
-      // getElement("#MoTaSP").value = product.description;
       getElement("#loaiSP").value = product.goldPurity;
       getElement("#maSP").value = product.codeProduct;
       getElement("#TienCongSP").value = product.manufactureFee;
 
-      //Hàm logic để hiển thị dropdown Auto/Manual
       if (!product.weight) {
         getElement("#manualOrAuto").selectedIndex = 2;
         getElement("#weighItem").style.display = "none";
@@ -101,55 +103,57 @@ function selectProduct(productId) {
 
       getElement("#manualOrAuto").disabled = true;
 
-      //Hàm khóa nhập vào Cân nặng và Giá tiền nhập tay cùng lúc. Chọn 1 trong 2 option thì option còn lại set về 0
-      // getOption();
-
-      // Mở và cập nhật giao diện cho modal
       getElement(".modal-title").innerHTML = "Cập nhật sản phẩm";
       getElement(".modal-footer").innerHTML = `
         <button class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
         <button class="btn btn-primary" onclick="updateProduct('${product.id}')">Cập nhật</button>
       `;
+
       $("#myModal").modal("show");
     })
-    .catch((error) => {
+    .catch(() => {
       alertFail("Lấy chi tiết sản phẩm thất bại");
     });
 }
 
-// Hàm cập nhật sản phẩm
+// ================= UPDATE (FIXED CORE ISSUE) =================
 function updateProduct(productId) {
   debugger;
+
   const product = {
     name: getElement("#TenSP").value,
     weight: getElement("#GiaSP").value,
     type: getElement("#productForm").value,
     price: +getElement("#GiaNhapTay").value,
     img: getElement("#HinhSP").value,
-    // description: getElement("#MoTaSP").value,
     goldPurity: getElement("#loaiSP").value,
     codeProduct: getElement("#maSP").value,
     manufactureFee: +getElement("#TienCongSP").value,
   };
 
   let isValid = validate();
-  if (!isValid) {
-    return;
-  }
+  if (!isValid) return;
+
   apiUpdateProduct(productId, product)
+    .then(() => {
+      // 🔥 QUAN TRỌNG: luôn lấy data mới từ server
+      return apiGetProducts();
+    })
     .then((response) => {
-      // renderProducts(response.data);  a
-      alertSuccess("Sản phẩm đã được cập nhật");
-      getProducts(productList);
+      productList = response.data;
+
+      renderProducts(productList);
+
       alertSuccess("Cập nhật sản phẩm thành công");
     })
-    .catch((error) => {
+    .catch(() => {
       alertFail("Cập nhật sản phẩm thất bại");
     });
+
   $("#myModal").modal("hide");
 }
 
-// Hàm hiển thị danh sách sản phẩm ra table
+// ================= RENDER =================
 function renderProducts(products) {
   let html = products.reduce((result, product, index) => {
     return (
@@ -157,87 +161,78 @@ function renderProducts(products) {
       `
       <tr style="font-size: 17px">
         <td class="text-center">${index + 1}</td>
+
         <td class="text-center">
-        <img src="${product.img}" with="80" height="80" alt="${product.name}" />
-        <td>${product.name}</td>
+          <img src="${product.img}" width="80" height="80" alt="${product.name}" />
         </td>
+
+        <td>${product.name}</td>
         <td class="text-center">${product.goldPurity}</td>
         <td class="text-center">${product.weight}</td>
-        <td class="text-center">${new Intl.NumberFormat("vn-VN").format(
-        product.manufactureFee
-      )}</td>
-        <td class="price${product.id} text-center">${new Intl.NumberFormat(
-        "vn-VN"
-      ).format(product.price)}</td>
+
         <td class="text-center">
-          <button
-            class="btn btn-primary"
-            onclick="selectProduct('${product.id}')"
-          >
-            Xem
-          </button>
-          <button
-            class="btn btn-danger"
-            onclick="deleteProduct('${product.id}')"
-          >
-            Xoá
-          </button>
+          ${new Intl.NumberFormat("vn-VN").format(product.manufactureFee)}
+        </td>
+
+        <td class="price${product.id} text-center">
+          ${new Intl.NumberFormat("vn-VN").format(product.price)}
+        </td>
+
+        <td class="text-center">
+          <button class="btn btn-primary" onclick="selectProduct('${product.id}')">Xem</button>
+          <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">Xoá</button>
         </td>
       </tr>
     `
     );
   }, "");
+
   document.getElementById("tblDanhSachSP").innerHTML = html;
 }
 
-//Hàm gọi Modal để chuẩn bị thêm mới sản phẩm
+// ================= ADD BUTTON =================
 function addNewProduct() {
   resetForm();
 }
 
-//Hàm reset dữ liệu trên Modal
+// ================= RESET FORM =================
 function resetForm() {
   getElement("#manualOrAuto").disabled = false;
   getElement("#manualOrAuto").selectedIndex = 0;
+
   getElement("#TenSP").value = "";
   getElement("#HinhSP").value = "";
   getElement("#GiaSP").value = "";
-  // getElement("#MoTaSP").value = "";
   getElement("#loaiSP").selectedIndex = 0;
   getElement("#maSP").value = "";
   getElement("#TienCongSP").value = "";
   getElement("#GiaNhapTay").value = "";
-
-  getElement("#tbTenSP").classList.remove("d-block");
-  getElement("#tbCanNangSP").classList.remove("d-block");
-  getElement("#tbLinkSP").classList.remove("d-block");
-  // getElement("#tbMoTaSP").classList.remove("d-block");
-  getElement("#tbMaSP").classList.remove("d-block");
 }
 
-// ============ DOM ===============
+// ================= OPTION =================
 function getOption() {
   let selectedIndex = getElement("#manualOrAuto").selectedIndex;
+
   if (selectedIndex === 1) {
     getElement("#priceManual").style.display = "none";
     getElement("#weighItem").style.display = "block";
     getElement("#manufactureFee").style.display = "block";
 
-    getElement("#GiaNhapTay").value = ""; //Set giá trị input Giá nhập tay = 0
+    getElement("#GiaNhapTay").value = "";
   }
+
   if (selectedIndex === 2) {
     getElement("#weighItem").style.display = "none";
     getElement("#priceManual").style.display = "block";
     getElement("#manufactureFee").style.display = "none";
 
-    //Set input Cân nặng SP và Tiền công = 0
     getElement("#TienCongSP").value = "";
     getElement("#GiaSP").value = "";
   }
 }
 
 getElement("#btnThemSP").addEventListener("click", () => {
-  getOption(); //Hàm getOption() chỉ được gọi khi người dùng click vào ô dropdown
+  getOption();
 
   getElement(".modal-title").innerHTML = "Thêm sản phẩm";
   getElement(".modal-footer").innerHTML = `
@@ -246,92 +241,42 @@ getElement("#btnThemSP").addEventListener("click", () => {
   `;
 });
 
-// ============ Helpers ==============
-function getElement(selector) {
-  return document.querySelector(selector);
-}
-
-// ===============Validation===================
+// ================= VALIDATION =================
 function validate() {
   let isValid = true;
 
-  // kiểm tra tên sản phẩm
-  name = getElement("#TenSP").value;
+  let name = getElement("#TenSP").value;
   if (!name.trim()) {
     isValid = false;
-    getElement("#tbTenSP").classList.add("d-block");
     getElement("#tbTenSP").innerHTML = "Tên Sản Phẩm không để trống";
-  } else if (/^\d*[0-9]$/.test(name)) {
-    isValid = false;
-    getElement("#tbTenSP").classList.add("d-block");
-    getElement("#tbTenSP").innerHTML = "Tên Sản Phẩm không hợp lệ";
-  } else {
-    getElement("#tbTenSP").innerHTML = "";
   }
 
-  //kiểm tra cân nặng
-  weight = getElement("#GiaSP").value;
-  // if (!weight.trim()) {
-  //   isValid = false;
-  //   getElement("#tbCanNangSP").classList.add("d-block");
-  //   getElement("#tbCanNangSP").innerHTML = "Cân nặng Sản Phẩm không để trống";
-  // } else
+  let weight = getElement("#GiaSP").value;
   if (!/^\d*(\.\d+)?$/.test(weight)) {
     isValid = false;
-    getElement("#tbCanNangSP").classList.add("d-block");
-    getElement("#tbCanNangSP").innerHTML = "Cân nặng Sản Phẩm không hợp lệ";
-  } else {
-    getElement("#tbCanNangSP").innerHTML = "";
+    getElement("#tbCanNangSP").innerHTML = "Cân nặng không hợp lệ";
   }
 
-  //kiểm tra đường dẫn hình ảnh
-  img = getElement("#HinhSP").value;
+  let img = getElement("#HinhSP").value;
   if (!img.trim()) {
     isValid = false;
-    getElement("#tbLinkSP").classList.add("d-block");
-    getElement("#tbLinkSP").innerHTML = "Đường dẫn Sản phẩm không để trống";
-  } else {
-    getElement("#tbLinkSP").innerHTML = "";
+    getElement("#tbLinkSP").innerHTML = "Hình không để trống";
   }
 
-  //kiểm tra mô tả
-  // description = getElement("#MoTaSP").value;
-  // if (!description.trim()) {
-  //   isValid = false;
-  //   getElement("#tbMoTaSP").classList.add("d-block");
-  //   getElement("#tbMoTaSP").innerHTML = "Mô tả Sản Phẩm không để trống";
-  // } else if (/\d/.test(description)) {
-  //   isValid = false;
-  //   getElement("#tbMoTaSP").classList.add("d-block");
-  //   getElement("#tbMoTaSP").innerHTML = "Mô tả Sản Phẩm không hợp lệ";
-  // } else {
-  //   getElement("#tbMoTaSP").innerHTML = "";
-  // }
-
-  //kiểm tra Mã sản phẩm (Phải định dạng số)
-  codeProduct = getElement("#maSP").value;
-  if (!codeProduct.trim()) {
+  let code = getElement("#maSP").value;
+  if (!/^[0-9]*$/.test(code)) {
     isValid = false;
-    getElement("#tbMaSP").classList.add("d-block");
-    getElement("#tbMaSP").innerHTML = "Mã Sản Phẩm không để trống";
-  } else if (!/^[0-9]*$/.test(codeProduct)) {
-    isValid = false;
-    getElement("#tbMaSP").classList.add("d-block");
-    getElement("#tbMaSP").innerHTML = "Mã Sản Phẩm không hợp lệ";
-  } else {
-    getElement("#tbMaSP").innerHTML = "";
+    getElement("#tbMaSP").innerHTML = "Mã sản phẩm không hợp lệ";
   }
+
   return isValid;
 }
 
-//Hàm tìm kiếm tên sản phẩm thông qua sự kiện type input
-// function lookUpProduct() {
-//   getElement("#txtSearch").addEventListener("input", (event) => {
-//     let newProductList = productList.filter((product) => {
-//       let name = product.name.toLowerCase();
-//       let search = event.target.value.toLowerCase();
-//       return product.name.indexOf(search) !== -1;
-//     });
-//     renderProducts(newProductList);
-//   });
-// }
+// ================= GLOBAL EXPORT FOR HTML onclick =================
+window.selectProduct = selectProduct;
+window.updateProduct = updateProduct;
+window.deleteProduct = deleteProduct;
+window.createProduct = createProduct;
+window.searchProduct = searchProduct;
+window.addNewProduct = addNewProduct;
+window.getOption = getOption;

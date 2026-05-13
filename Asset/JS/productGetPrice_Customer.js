@@ -2,7 +2,7 @@
 import { renderProductsCustomer } from "./renderProducts.js";
 
 const URL1 = "https://63f47a4c55677ef68bbcc8ea.mockapi.io/products"; //Product của Hưng Lợi
-const URL2 = "https://www.mihong.vn/api/v1/gold/prices/current"; //Api Mi Hồng
+const URL2 = "https://api.mihong.vn/v1/gold-prices?market=domestic"; //Api Mi Hồng
 const URL5 = "https://6426b4b4556bad2a5b55dbf6.mockapi.io/feedback";
 const URL6 = "https://www.mihong.vn/api/v1/gold/prices/world/current";
 let productList;

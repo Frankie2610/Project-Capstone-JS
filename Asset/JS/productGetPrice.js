@@ -1,7 +1,7 @@
 // File constructor Product và tính giá sản phẩm theo khối lượng
 
 URL1 = "https://63f47a4c55677ef68bbcc8ea.mockapi.io/products"; //Product của Hưng Lợi
-URL2 = "https://www.mihong.vn/api/v1/gold/prices/current"; //Api Mi Hồng
+URL2 = "https://api.mihong.vn/v1/gold-prices?market=domestic"; //Api Mi Hồng
 URL3 = "https://6426b4b4556bad2a5b55dbf6.mockapi.io/mihongPrice"; //MockApi copy Mihong
 
 // getProducts();
@@ -126,8 +126,8 @@ async function getProducts() {
         price.dateTime
       );
     });
-    priceSJC = pricesList[0].sellingPrice / 375; //Giá Vàng SJC trên 1 gram
-    price999 = pricesList[1].sellingPrice / 375; //Giá Vàng SJC trên 1 gram
+    priceSJC = pricesList[0].sellingPrice / 3.75; //Giá Vàng SJC trên 1 gram
+    price999 = pricesList[1].sellingPrice / 3.75; //Giá Vàng SJC trên 1 gram
     arrayPriceUnit.push(priceSJC, price999);
 
     let products = await apiGetProducts();

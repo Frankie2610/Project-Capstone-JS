@@ -61,7 +61,6 @@ function toNumber(value) {
   return Number(
     value
       .toString()
-      .replace(/\./g, "")
       .replace(/,/g, "")
   );
 }
@@ -96,22 +95,22 @@ async function getProducts() {
 
         case "999":
         case "24k-ThầnTài":
-          unitPrice = toNumber(arrayPriceUnit[1]);
+          unitPrice = toNumber(arrayPriceUnit[3]);
           priceDateTime = priceDateTime24k;
           break;
 
         case "750":
-          unitPrice = toNumber(arrayPriceUnit[3]);
+          unitPrice = toNumber(arrayPriceUnit[5]);
           priceDateTime = priceDateTime18k;
           break;
 
         case "680":
-          unitPrice = toNumber(arrayPriceUnit[5]);
+          unitPrice = toNumber(arrayPriceUnit[7]);
           priceDateTime = priceDateTime16k;
           break;
 
         case "610":
-          unitPrice = toNumber(arrayPriceUnit[7]);
+          unitPrice = toNumber(arrayPriceUnit[9]);
           priceDateTime = priceDateTime14k;
           break;
 
@@ -119,14 +118,12 @@ async function getProducts() {
           continue;
       }
 
-      const rawPrice = weight * unitPrice + fee;
-
-      product.price = Math.round(rawPrice) / 10;
+      const rawPrice = weight * unitPrice / 37.5 + fee;
+      product.price = Math.round(rawPrice);
       product.priceDateTime = priceDateTime;
 
       await apiUpdatePriceProduct(product, productId);
     }
-
     renderProducts(productList);
   } catch (error) {
     console.error(error);
@@ -239,5 +236,6 @@ function apiUpdateGap24k(gapGold, gapGoldId) {
 
 export {
   productList,
-  getProducts
+  getProducts,
+  apiGetProducts
 }
