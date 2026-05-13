@@ -118,10 +118,32 @@ async function showPrice() {
     getElement("#priceSelling14k").innerHTML =
       price14k.toLocaleString();
 
-    ["SJC", "24k", "18k", "16k", "14k"].forEach(k => {
-      const el = getElement(`#sellChangePercent${k}`);
-      el.innerHTML = "0.00%";
-      el.classList.add("text-success");
+    const goldMap = {
+      SJC,
+      "24k": gold24k,
+      "18k": gold18k,
+      "16k": gold16k,
+      "14k": gold14k
+    };
+
+    ["SJC", "24k", "18k", "16k", "14k"].forEach(key => {
+      const el = getElement(`#sellChangePercent${key}`);
+      const item = goldMap[key];
+
+      if (!el || !item) return;
+
+      const value = Number(item?.sellChangePercent ?? 0);
+
+      el.innerHTML = `${value} %`;
+
+      // reset class trước để tránh bị cộng dồn
+      el.classList.remove("text-success", "text-danger");
+
+      if (value < 0) {
+        el.classList.add("text-danger");
+      } else {
+        el.classList.add("text-success");
+      }
     });
 
     getElement("#dateTime").innerHTML = gold24k.dateTime;
